@@ -1,0 +1,32 @@
+
+##### OS X system file ######
+.DS_Store
+
+
+##### virtual machine crash logs ######
+hs_err_pid*
+
+
+##### Build files/folders ######
+*.class
+*.jar
+!misc/java_crypto/local_policy.jar
+!misc/java_crypto/US_export_policy.jar
+target/
+
+##### IntelliJ files ######
+*.iml
+# Also IntelliJ. Use this format to be able un-ignore code style settings below
+.idea/*
+# Do not ignore code style settings
+!.idea/codeStyles
+# Do not ignore inspection profiles
+!.idea/inspectionProfiles
+# Do not ignore shared run-debug configurations
+!.idea/runConfigurations
+
+##### scss build cache files ######
+*.scssc
+
+##### m 22 command creates temporary backup in this folder ######
+db_backup/*
