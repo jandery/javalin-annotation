@@ -35,45 +35,45 @@ class ApiMethodTest {
     }
 
     @Test
-    fun `getWebServerRoute _ empty argument _ test empty argument`() {
+    fun getWebServerRoute_emptyParam_testEmptyArgument() {
         assertThat(emptyParamMethod.getWebServerRoute()).isEqualTo("/test/empty/argument")
     }
 
     @Test
-    fun `getWebServerHandlerType _ empty argument _ GET`() {
+    fun getWebserverHandler_emptyParam_GET() {
         assertThat(emptyParamMethod.getWebServerHandlerType()).isEqualTo(HandlerType.GET)
     }
 
     @Test
-    fun `mapParametersToTypeArguments _ empty argument _ empty list`() {
+    fun mapParametersToTypeArguments_emptyParam_emptyList() {
         assertThat(emptyParamMethod.mapParametersToTypeArguments(emptyArgumentContext))
             .isEmpty()
     }
 
     @Test
-    fun `emptyArgumentMethod _ empty argument _ Nothing to see`() {
+    fun emptyArgumentMethod_emptyArgument_nothingToSee() {
         val response = MyApiHandlerCls().emptyArgumentMethod()
         assertThat(response).isEqualTo("Nothing to see")
     }
 
     @Test
-    fun `getWebServerRoute _ argument method _ test empty argument`() {
+    fun getWebServerRoute_argumentMethod_testEmptyArgument() {
         assertThat(paramMethod.getWebServerRoute()).isEqualTo("/test/non-empty/argument")
     }
 
     @Test
-    fun `getWebServerHandlerType _ argument method _ GET`() {
+    fun getWebServerHandlerType_argumentMethod_GET() {
         assertThat(paramMethod.getWebServerHandlerType()).isEqualTo(HandlerType.POST)
     }
 
     @Test
-    fun `mapParametersToTypeArguments _ argument method _ map with size 3`() {
+    fun mapParametersToTypeArgument_argumentMethod_mapWithSize3() {
         assertThat(paramMethod.mapParametersToTypeArguments(argContext))
             .hasSize(3)
     }
 
     @Test
-    fun `emptyArgumentMethod _ argument method _ Nothing to see`() {
+    fun emptyArgumentMethod_argumentMethod_nothingToSee() {
         val response = MyApiHandlerCls()
             .argumentsMethod(LocalDate.parse("2020-10-20"), 5, false)
         assertThat(response).isEqualTo("2020-10-20 5 false")
@@ -85,7 +85,8 @@ private class MyApiHandlerCls {
     @Api(
         type = HandlerType.GET,
         path = "/test/empty/argument",
-        accessRole = "PUBLIC")
+        accessRole = "PUBLIC"
+    )
     fun emptyArgumentMethod(): String {
         return "Nothing to see"
     }
@@ -93,7 +94,8 @@ private class MyApiHandlerCls {
     @Api(
         type = HandlerType.POST,
         path = "/test/non-empty/argument",
-        accessRole = "ADMIN")
+        accessRole = "ADMIN"
+    )
     fun argumentsMethod(
         @Param("routeParam", ParameterType.ROUTE) routeParam: LocalDate,
         @Param("queryParam", ParameterType.QUERY) queryParam: Int,
