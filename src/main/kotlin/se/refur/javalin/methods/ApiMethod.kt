@@ -5,6 +5,7 @@ import io.javalin.http.ContentType
 import io.javalin.http.Handler
 import io.javalin.http.HandlerType
 import se.refur.javalin.Api
+import se.refur.javalin.JavalinAnnotation
 import java.lang.reflect.Method
 
 /**
@@ -32,7 +33,7 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
      * Route access
      * @see AnnotatedMethod.getAccessRole
      */
-    override fun getAccessRole(): RouteRole = AccessRole(annotation.accessRole)
+    override fun getAccessRole(): RouteRole = JavalinAnnotation.getRole(annotation.accessRole)
 
     /**
      * Generate handler for the api call

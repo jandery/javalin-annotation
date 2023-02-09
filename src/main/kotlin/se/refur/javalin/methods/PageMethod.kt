@@ -3,6 +3,7 @@ package se.refur.javalin.methods
 import io.javalin.core.security.RouteRole
 import io.javalin.http.Handler
 import io.javalin.http.HandlerType
+import se.refur.javalin.JavalinAnnotation
 import se.refur.javalin.Page
 import java.lang.reflect.Method
 
@@ -31,7 +32,7 @@ internal class PageMethod(method: Method) : AnnotatedMethod(method) {
      * Route access
      * @see AnnotatedMethod.getAccessRole
      */
-    override fun getAccessRole(): RouteRole = AccessRole(annotation.accessRole)
+    override fun getAccessRole(): RouteRole = JavalinAnnotation.getRole(annotation.accessRole)
 
     /**
      * Generate handler for the Page renderer
@@ -44,9 +45,15 @@ internal class PageMethod(method: Method) : AnnotatedMethod(method) {
         // Call method with typed arguments
         val templateDataMap: Map<String, Any> = annotationMethod
             .invoke(obj, *args.toTypedArray()) as Map<String, Any>
-        // Render web page with template path and template data map
-        ctx.status(200).render(
-            filePath = annotation.templatePath,
-            model = templateDataMap)
+        try {
+            // Render web page with template path and template data map
+            ctx.status(200).render(
+                filePath = annotation.templatePath,
+                model = templateDataMap)
+        } catch (e: Exception) {
+            println(e)
+            throw e
+        }
+
     }
 }

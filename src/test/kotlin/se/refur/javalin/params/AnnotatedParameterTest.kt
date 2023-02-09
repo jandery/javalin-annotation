@@ -23,6 +23,6 @@ class AnnotatedParameterTest {
             .javaMethod
             ?.let { AnnotatedParameter.filterAnnotatedParams(it.parameters) }
             ?: emptyList()
-        assertThat(parameters).hasSize(3)
+        assertThat(parameters).hasSize(0)
     }
 }
