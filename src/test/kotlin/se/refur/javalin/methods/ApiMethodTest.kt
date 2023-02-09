@@ -6,9 +6,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import se.refur.javalin.Api
-import se.refur.javalin.Param
-import se.refur.javalin.ParameterType
+import se.refur.javalin.AnnotatedClass
 import java.lang.reflect.Method
 import java.time.LocalDate
 import kotlin.reflect.jvm.javaMethod
@@ -18,11 +16,11 @@ class ApiMethodTest {
     private val paramMethod: ApiMethod
 
     init {
-        val emptyParamJavaMethod: Method = MyApiHandlerCls::emptyArgumentMethod.javaMethod
+        val emptyParamJavaMethod: Method = AnnotatedClass::apiEmptyArgumentMethod.javaMethod
             ?: throw Exception("An error occurred")
         emptyParamMethod = ApiMethod(emptyParamJavaMethod)
 
-        val paramJavaMethod: Method = MyApiHandlerCls::argumentsMethod.javaMethod
+        val paramJavaMethod: Method = AnnotatedClass::apiArgumentsMethod.javaMethod
             ?: throw Exception("An error occurred")
         paramMethod = ApiMethod(paramJavaMethod)
     }
@@ -36,7 +34,7 @@ class ApiMethodTest {
 
     @Test
     fun getWebServerRoute_emptyParam_testEmptyArgument() {
-        assertThat(emptyParamMethod.getWebServerRoute()).isEqualTo("/test/empty/argument")
+        assertThat(emptyParamMethod.getWebServerRoute()).isEqualTo("/api/empty")
     }
 
     @Test
@@ -52,13 +50,13 @@ class ApiMethodTest {
 
     @Test
     fun emptyArgumentMethod_emptyArgument_nothingToSee() {
-        val response = MyApiHandlerCls().emptyArgumentMethod()
+        val response = AnnotatedClass().apiEmptyArgumentMethod()
         assertThat(response).isEqualTo("Nothing to see")
     }
 
     @Test
     fun getWebServerRoute_argumentMethod_testEmptyArgument() {
-        assertThat(paramMethod.getWebServerRoute()).isEqualTo("/test/non-empty/argument")
+        assertThat(paramMethod.getWebServerRoute()).isEqualTo("/api/non-empty")
     }
 
     @Test
@@ -74,33 +72,8 @@ class ApiMethodTest {
 
     @Test
     fun emptyArgumentMethod_argumentMethod_nothingToSee() {
-        val response = MyApiHandlerCls()
-            .argumentsMethod(LocalDate.parse("2020-10-20"), 5, false)
+        val response = AnnotatedClass()
+            .apiArgumentsMethod(LocalDate.parse("2020-10-20"), 5, false)
         assertThat(response).isEqualTo("2020-10-20 5 false")
-    }
-}
-
-private class MyApiHandlerCls {
-
-    @Api(
-        type = HandlerType.GET,
-        path = "/test/empty/argument",
-        accessRole = "PUBLIC"
-    )
-    fun emptyArgumentMethod(): String {
-        return "Nothing to see"
-    }
-
-    @Api(
-        type = HandlerType.POST,
-        path = "/test/non-empty/argument",
-        accessRole = "ADMIN"
-    )
-    fun argumentsMethod(
-        @Param("routeParam", ParameterType.ROUTE) routeParam: LocalDate,
-        @Param("queryParam", ParameterType.QUERY) queryParam: Int,
-        @Param("formParam", ParameterType.FORM) formParam: Boolean
-    ): String {
-        return "$routeParam $queryParam $formParam"
     }
 }

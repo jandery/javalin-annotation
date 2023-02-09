@@ -62,6 +62,12 @@ internal object QueryParamAsInt : IParameterParser {
         ctx.queryParamAsClass(paramName, Int::class.java).getOrDefault(-1)
 }
 
+/**
+ * Parse query parameter as LocalDate
+ * f.x. /api?date=2022-10-20
+ * Javalin Validator only supports primitives. Other types must be handled separately.
+ * @see [io.javalin.core.validation.JavalinValidation]
+ */
 internal object QueryParamAsLocalDate : IParameterParser {
     private val parser: (Context, String) -> Any = { ctx: Context, paramName: String ->
         val stringValue = ctx.queryParam(paramName)
@@ -73,8 +79,8 @@ internal object QueryParamAsLocalDate : IParameterParser {
 }
 
 /**
- * Parse form parameter as String
- * f.x. ServerCaller().addArg("type", "myType").call(), when paramName is "type", returns myType
+ * Parse a form parameter as String
+ * f.x. jQuery.ajax({data:{strValue:"aValue",intValue:42,dateValue:"2022-10-20",boolValue:true}})
  */
 internal object FormParamAsString : IParameterParser {
     override fun getTypedValue(ctx: Context, paramName: String): Any =
@@ -82,14 +88,18 @@ internal object FormParamAsString : IParameterParser {
 }
 
 /**
- * Parse form parameter as String
- * f.x. ServerCaller().addArg("age", 55).call(), when paramName is "age", returns 55
+ * Parse a form parameter as Int
+ * f.x. jQuery.ajax({data:{strValue:"aValue",intValue:42,dateValue:"2022-10-20",boolValue:true}})
  */
 internal object FormParamAsInt : IParameterParser {
     override fun getTypedValue(ctx: Context, paramName: String): Any =
         ctx.formParamAsClass(paramName, Int::class.java).get()
 }
 
+/**
+ * Parse a form parameter as LocalDate
+ * f.x. jQuery.ajax({data:{strValue:"aValue",intValue:42,dateValue:"2022-10-20",boolValue:true}})
+ */
 internal object FormParamAsLocalDate : IParameterParser {
     private val parser: (Context, String) -> Any = { ctx: Context, paramName: String ->
         val stringValue = ctx.formParam(paramName)
@@ -101,8 +111,8 @@ internal object FormParamAsLocalDate : IParameterParser {
 }
 
 /**
- * Parse form parameter as String
- * f.x. ServerCaller().addArg("isDone", true).call(), when paramName is "isDone", returns true
+ * Parse a form parameter as Boolean
+ * f.x. jQuery.ajax({data:{strValue:"aValue",intValue:42,dateValue:"2022-10-20",boolValue:true}})
  */
 internal object FormParamAsBoolean : IParameterParser {
     override fun getTypedValue(ctx: Context, paramName: String): Any =

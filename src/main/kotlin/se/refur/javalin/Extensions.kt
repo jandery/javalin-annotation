@@ -11,6 +11,7 @@ import org.reflections.util.ConfigurationBuilder
  * @param packageName package where to look for annotated methods
  * @return extended object for chaining
  */
+@Suppress("unused")
 fun Javalin.exposeHandlers(packageName: String): Javalin {
     val configurationBuilder: ConfigurationBuilder = ConfigurationBuilder()
         // set where to search
