@@ -31,4 +31,45 @@ class ParamParserTest {
             .hasMessage("Could not parse 'date' to 'LocalDate'")
     }
 
+    @Test
+    fun queryParamAsDate_validDateAsString_isLocalDate() {
+        val ctx = mockk<Context>().also {
+            every { it.queryParam("date") } returns "2020-10-20"
+        }
+        val localDate = QueryParamAsLocalDate.getTypedValue(ctx, "date")
+        assertThat(localDate).isInstanceOf(LocalDate::class.java)
+    }
+
+    @Test
+    fun queryParamAsDate_invalidDateAsString_exceptionIsThrown() {
+        val ctx = mockk<Context>().also {
+            every { it.queryParam("date") } returns "julgran"
+        }
+        assertThatThrownBy {
+            QueryParamAsLocalDate.getTypedValue(ctx, "date")
+        }
+            .isExactlyInstanceOf(Exception::class.java)
+            .hasMessage("Could not parse 'date' to 'LocalDate'")
+    }
+
+    @Test
+    fun formParamAsDate_validDateAsString_isLocalDate() {
+        val ctx = mockk<Context>().also {
+            every { it.formParam("date") } returns "2020-10-20"
+        }
+        val localDate = FormParamAsLocalDate.getTypedValue(ctx, "date")
+        assertThat(localDate).isInstanceOf(LocalDate::class.java)
+    }
+
+    @Test
+    fun formParamAsDate_invalidDateAsString_exceptionIsThrown() {
+        val ctx = mockk<Context>().also {
+            every { it.formParam("date") } returns "julgran"
+        }
+        assertThatThrownBy {
+            FormParamAsLocalDate.getTypedValue(ctx, "date")
+        }
+            .isExactlyInstanceOf(Exception::class.java)
+            .hasMessage("Could not parse 'date' to 'LocalDate'")
+    }
 }

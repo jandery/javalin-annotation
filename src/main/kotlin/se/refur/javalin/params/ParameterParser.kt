@@ -31,7 +31,7 @@ internal object RouteParamAsInt : IParameterParser {
 /**
  * Parse route parameter as LocalDate
  * f.x. /api/{date} is /api/2022-10-20 when paramName is "date"
- * Javalin Validator only supports primitives. Other types must be handled separatly.
+ * Javalin Validator only supports primitives. Other types must be handled separately.
  * @see [io.javalin.core.validation.JavalinValidation]
  */
 internal object RouteParamAsLocalDate : IParameterParser {
@@ -62,6 +62,16 @@ internal object QueryParamAsInt : IParameterParser {
         ctx.queryParamAsClass(paramName, Int::class.java).getOrDefault(-1)
 }
 
+internal object QueryParamAsLocalDate : IParameterParser {
+    private val parser: (Context, String) -> Any = { ctx: Context, paramName: String ->
+        val stringValue = ctx.queryParam(paramName)
+        LocalDate.parse(stringValue)
+    }
+
+    override fun getTypedValue(ctx: Context, paramName: String): Any =
+        parseWithException(parser, ctx, paramName, LocalDate::class.simpleName)
+}
+
 /**
  * Parse form parameter as String
  * f.x. ServerCaller().addArg("type", "myType").call(), when paramName is "type", returns myType
@@ -78,6 +88,16 @@ internal object FormParamAsString : IParameterParser {
 internal object FormParamAsInt : IParameterParser {
     override fun getTypedValue(ctx: Context, paramName: String): Any =
         ctx.formParamAsClass(paramName, Int::class.java).get()
+}
+
+internal object FormParamAsLocalDate : IParameterParser {
+    private val parser: (Context, String) -> Any = { ctx: Context, paramName: String ->
+        val stringValue = ctx.formParam(paramName)
+        LocalDate.parse(stringValue)
+    }
+
+    override fun getTypedValue(ctx: Context, paramName: String): Any =
+        parseWithException(parser, ctx, paramName, LocalDate::class.simpleName)
 }
 
 /**
