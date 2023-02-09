@@ -4,7 +4,7 @@ import io.javalin.http.HandlerType
 
 
 /**
- * The purpose of this annotation is to register a web page enpoint
+ * The purpose of this annotation is to register a web page endpoint
  * Function annotated with this is expected to return the rendering data map for template,
  *      Map<String,Any>
  * @property type Type of endpoint
@@ -46,7 +46,7 @@ annotation class Param(val paramName: String, val parameterType: ParameterType)
 
 /**
  * The purpose of this enum is hold types of parameters
- * @property ROUTE route parameter, f.x. /api/{PRARAM}
+ * @property ROUTE route parameter, f.x. /api/{PARAM}
  * @property QUERY query parameter, f.x. /api?{PARAM}=value
  * @property FORM form parameter, f.x. in JS ServerCaller("/api", "POST").addArg("{PARAM}", "value")
  * @property COOKIE stored cookie
