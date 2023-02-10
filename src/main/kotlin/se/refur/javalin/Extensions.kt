@@ -12,7 +12,7 @@ import org.reflections.util.ConfigurationBuilder
  * @return extended object for chaining
  */
 @Suppress("unused")
-fun Javalin.exposeHandlers(packageName: String): Javalin {
+fun Javalin.exposePackageEndpoints(packageName: String): Javalin {
     val configurationBuilder: ConfigurationBuilder = ConfigurationBuilder()
         // set where to search
         .setUrls(ClasspathHelper.forPackage(packageName))

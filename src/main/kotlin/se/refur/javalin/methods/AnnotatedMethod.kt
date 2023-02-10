@@ -26,21 +26,23 @@ internal open class AnnotatedMethod(val annotationMethod: Method) {
 
     /**
      * Get the web server route path
+     * Example "/some/route"
      */
     open fun getWebServerRoute(): String = throw Exception("Override me")
 
     /**
-     * Get the type of handler for web server, f.x. POST, GET, PUT etc
+     * Get the type of handler for web server
+     * Example POST, GET, PUT, DELETE etc
      */
     open fun getWebServerHandlerType(): HandlerType = throw Exception("Override me")
 
     /**
-     * Generate the web server route handler
+     * Generate the web server endpoint handler
      */
     open fun generateWebServerHandler(): Handler = throw Exception("Override me")
 
     /**
-     * Get roles for access
+     * Get roles for user access
      */
     open fun getAccessRole(): RouteRole = throw Exception("Override me")
 
