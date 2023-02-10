@@ -6,16 +6,13 @@ import io.javalin.core.security.RouteRole
  * The purpose of this
  */
 object JavalinAnnotation {
-    private var availableRoles: List<RouteRole> = emptyList()
+    private var availableRoles: Map<String, RouteRole> = emptyMap()
 
-    fun setRoles(routeRoles: List<RouteRole>) {
-        availableRoles = routeRoles
-    }
-
-    fun setRoles(routeRoles: Array<RouteRole>) {
-        setRoles(routeRoles.toList())
+    fun setRoles(map: Map<String, RouteRole>) {
+        availableRoles = map
     }
 
     internal fun getRole(roleName: String): RouteRole =
-        availableRoles.first { it.toString() == roleName }
+        availableRoles[roleName]
+            ?: throw Exception("No role matching '$roleName'")
 }
