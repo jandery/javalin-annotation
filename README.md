@@ -68,9 +68,13 @@ class FirstExample {
 Endpoint parameters should be annotated with @Param
 
 The following types of parameters are supported (see ParameterType enum):
+
 ROUTE, example /api/{PARAM}
+
 QUERY, example /api?{PARAM}=value
+
 FORM, example jQuery.ajax({data:{strValue:"aValue",intValue:42,dateValue:"2022-10-20",boolValue:true}})
+
 COOKIE, stored with @ApiCookie annotated method
 
 ```kotlin
