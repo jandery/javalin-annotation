@@ -25,7 +25,20 @@
         <assertj.version>3.20.2</assertj.version>
         <!-- Mocking library for kotlin. https://mockk.io/ -->
         <mockk.version>1.12.4</mockk.version>
+
+        <refur-maven-repo>maven-repo.refur.se</refur-maven-repo>
     </properties>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>${refur-maven-repo}</id>
+            <url>s3://${refur-maven-repo}/snapshot</url>
+        </snapshotRepository>
+        <repository>
+            <id>${refur-maven-repo}</id>
+            <url>s3://${refur-maven-repo}/release</url>
+        </repository>
+    </distributionManagement>
 
     <repositories>
         <repository>
@@ -79,10 +92,36 @@
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <!-- Plug in for attaching sources to deploys -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.1</version>
+                </plugin>
+                <plugin>
+                    <!-- Plug in for java doc to deploys -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.3.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <extensions>
+            <!-- Enables communication between Maven and Amazon S3.
+            Used to transfer deploys to maven repo. -->
+            <extension>
+                <groupId>org.kuali.maven.wagons</groupId>
+                <artifactId>maven-s3-wagon</artifactId>
+                <version>1.2.1</version>
+            </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
+                <!--suppress DifferentKotlinMavenVersion -->
                 <version>${kotlin.version}</version>
                 <executions>
                     <execution>
@@ -108,7 +147,6 @@
                 <!-- Attach sources -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -126,11 +164,6 @@
                     <source>11</source>
                     <target>11</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.0</version>
             </plugin>
         </plugins>
     </build>
