@@ -8,16 +8,27 @@ Include the following in your POM:
 <project xmlns="...">
     <repositories>
         <repository>
-            <id>TODO</id>
-            <url>TODO</url>
+            <id>maven-central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        <repository>
+            <id>maven-repo.refur.se</id>
+            <url>https://s3-eu-west-1.amazonaws.com/maven-repo.refur.se/release</url>
         </repository>
     </repositories>
 
     <dependencies>
+        <!-- Javalin web server from maven-central -->
+        <dependency>
+            <groupId>io.javalin</groupId>
+            <artifactId>javalin</artifactId>
+            <version>4.6.4</version>
+        </dependency>
+        <!-- Javalin extension for annotations from refur maven-repo -->
         <dependency>
             <groupId>se.refur</groupId>
             <artifactId>javalin</artifactId>
-            <version>${javalin.annotation.version}</version>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>    
 </project>
