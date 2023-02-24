@@ -40,8 +40,6 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
      * @see AnnotatedMethod.generateWebServerHandler
      */
     override fun generateWebServerHandler(): Handler = Handler { ctx ->
-        println("Exposing ${annotation.path}")
-
         // Get arguments from annotated parameters
         val args = mapParametersToTypeArguments(ctx)
         // Call method with typed arguments
