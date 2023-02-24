@@ -6,7 +6,7 @@
 
     <groupId>se.refur</groupId>
     <artifactId>javalin</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0-SNAPSHOT</version>
 
     <name>Javalin Annotation</name>
     <description>Allows Javalin Web framework to expose endpoints with annotation</description>
