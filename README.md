@@ -130,7 +130,9 @@ Javalin
     .create { config: JavalinConfig ->
         // ...
     }
+    // expose endpoints via package
     .exposePackageEndpoints("se.refur.example.first")
-    .exposePackageEndpoints("se.refur.example.second")
+    // expose endpoints via class
+    .exposeClassEndpoints(SecondExample::class)
     
 ```
