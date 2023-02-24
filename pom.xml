@@ -21,8 +21,10 @@
         <reflections.version>0.10.2</reflections.version>
 
         <!-- Libraries for tests. -->
-        <junit.version>5.9.2</junit.version>
         <assertj.version>3.20.2</assertj.version>
+        <jsoup.version>1.15.1</jsoup.version>
+        <junit.version>5.9.2</junit.version>
+        <log4j.version>1.7.36</log4j.version>
         <!-- Mocking library for kotlin. https://mockk.io/ -->
         <mockk.version>1.12.4</mockk.version>
 
@@ -85,6 +87,18 @@
             <groupId>io.mockk</groupId>
             <artifactId>mockk</artifactId>
             <version>${mockk.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>${log4j.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
