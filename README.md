@@ -28,7 +28,7 @@ Include the following in your POM:
         <dependency>
             <groupId>se.refur</groupId>
             <artifactId>javalin</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.1</version>
         </dependency>
     </dependencies>    
 </project>
