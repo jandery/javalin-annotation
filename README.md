@@ -123,7 +123,7 @@ class SecondExample {
 ```
 
 ##### Setup of Javalin endpoints using annotations
-Setup endpoints from package
+Setup endpoints
 ```kotlin
 Javalin
     // web server configuration
