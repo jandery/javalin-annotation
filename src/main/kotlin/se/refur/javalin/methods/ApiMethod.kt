@@ -45,6 +45,8 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
         // Call method with typed arguments
         val response: String = annotationMethod.invoke(obj, *args.toTypedArray()) as String
         // Render result
-        ctx.status(200).contentType(ContentType.TEXT_HTML).result(response)
+        ctx.status(200)
+            .contentType(ContentType.TEXT_HTML)
+            .result(response)
     }
 }

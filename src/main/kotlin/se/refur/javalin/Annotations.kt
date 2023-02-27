@@ -1,5 +1,6 @@
 package se.refur.javalin
 
+import io.javalin.http.ContentType
 import io.javalin.http.HandlerType
 
 
@@ -49,6 +50,19 @@ annotation class ApiCookie(val type: HandlerType, val path: String, val accessRo
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Param(val paramName: String, val parameterType: ParameterType)
 
+/**
+ * The purpose of annotation is to register a file download endpoint
+ * Return for functions annotated with this is expected to return ByteArray
+ * @property type Type of endpoint
+ * @property path Route path for endpoint
+ * @property contentType content type of file to download
+ * @property downloadAs default file name for download
+ * @property accessRole role that should be able to access endpoint
+ */
+@Target(AnnotationTarget.VALUE_PARAMETER)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Download(val type: HandlerType, val path: String, val contentType: ContentType,
+                          val downloadAs: String, val accessRole: String)
 
 
 /**

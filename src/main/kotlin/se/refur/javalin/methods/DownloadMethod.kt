@@ -3,18 +3,18 @@ package se.refur.javalin.methods
 import io.javalin.core.security.RouteRole
 import io.javalin.http.Handler
 import io.javalin.http.HandlerType
+import se.refur.javalin.Download
 import se.refur.javalin.JavalinAnnotation
-import se.refur.javalin.Page
 import java.lang.reflect.Method
 
 /**
- * The purpose of this class is generate web server handler for an Web page route, request for HTML
+ * The purpose of this
  */
-internal class PageMethod(method: Method) : AnnotatedMethod(method) {
+internal class DownloadMethod(method: Method) : AnnotatedMethod(method) {
     /**
      * Annotation for method
      */
-    private val annotation: Page = method.getAnnotation(Page::class.java)
+    private val annotation: Download = method.getAnnotation(Download::class.java)
 
     /**
      * Page route
@@ -34,19 +34,17 @@ internal class PageMethod(method: Method) : AnnotatedMethod(method) {
      */
     override fun getAccessRole(): RouteRole = JavalinAnnotation.getRole(annotation.accessRole)
 
-    /**
-     * Generate handler for the Page renderer
-     * @see AnnotatedMethod.generateWebServerHandler
-     */
-    @Suppress("UNCHECKED_CAST")
+
     override fun generateWebServerHandler(): Handler = Handler { ctx ->
         // Get arguments from annotated parameters
         val args = mapParametersToTypeArguments(ctx)
         // Call method with typed arguments
-        val templateDataMap: Map<String, Any> = annotationMethod
-            .invoke(obj, *args.toTypedArray()) as Map<String, Any>
-        // Render web page with template path and template data map
+        val fileContent: ByteArray = annotationMethod
+            .invoke(obj, *args.toTypedArray()) as ByteArray
+
         ctx.status(200)
-            .render(filePath = annotation.templatePath, model = templateDataMap)
+            .contentType(annotation.contentType)
+            .header("Content-Disposition", "attachment;filename=${annotation.downloadAs}")
+            .result(fileContent)
     }
 }
