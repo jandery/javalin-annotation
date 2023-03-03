@@ -48,7 +48,7 @@ annotation class ApiCookie(val type: HandlerType, val path: String, val accessRo
  * @property downloadAs default file name for download
  * @property accessRole role that should be able to access endpoint
  */
-@Target(AnnotationTarget.VALUE_PARAMETER)
+@Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Download(val type: HandlerType, val path: String, val contentType: ContentType,
                           val downloadAs: String, val accessRole: String)
