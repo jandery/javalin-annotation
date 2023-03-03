@@ -5,6 +5,7 @@ import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import se.refur.javalin.methods.ApiCookieMethod
 import se.refur.javalin.methods.ApiMethod
+import se.refur.javalin.methods.DownloadMethod
 import se.refur.javalin.methods.PageMethod
 import java.lang.reflect.Method
 import kotlin.reflect.KClass
@@ -27,6 +28,10 @@ fun Javalin.exposePackageEndpoints(packageName: String): Javalin {
 
     getAnnotatedMethods(packageName, Page::class)
         .map { PageMethod(it) }
+        .forEach { it.addHandler(this) }
+
+    getAnnotatedMethods(packageName, Download::class)
+        .map { DownloadMethod(it) }
         .forEach { it.addHandler(this) }
 
     // Return this for chaining

@@ -3,6 +3,7 @@ package se.refur.javalin
 import io.javalin.Javalin
 import se.refur.javalin.methods.ApiCookieMethod
 import se.refur.javalin.methods.ApiMethod
+import se.refur.javalin.methods.DownloadMethod
 import se.refur.javalin.methods.PageMethod
 import java.lang.reflect.Method
 import kotlin.reflect.KClass
@@ -36,6 +37,10 @@ fun <T : Any> Javalin.exposeClassEndpoints(clazz: Class<T>): Javalin {
 
     allClassMethods.filter { it.isAnnotationPresent(Page::class.java) }
         .map { PageMethod(it) }
+        .forEach { it.addHandler(this) }
+
+    allClassMethods.filter { it.isAnnotationPresent(Download::class.java) }
+        .map { DownloadMethod(it) }
         .forEach { it.addHandler(this) }
 
     // Return this for chaining
