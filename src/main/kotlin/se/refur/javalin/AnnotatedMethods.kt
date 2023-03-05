@@ -52,3 +52,7 @@ annotation class ApiCookie(val type: HandlerType, val path: String, val accessRo
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Download(val type: HandlerType, val path: String, val contentType: ContentType,
                           val downloadAs: String, val accessRole: String)
+
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Upload(val path: String, val accessRole: String)
