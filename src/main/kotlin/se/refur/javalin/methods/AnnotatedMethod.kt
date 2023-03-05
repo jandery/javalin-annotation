@@ -5,6 +5,7 @@ import io.javalin.core.security.RouteRole
 import io.javalin.http.Context
 import io.javalin.http.Handler
 import io.javalin.http.HandlerType
+import se.refur.javalin.JavalinAnnotation
 import se.refur.javalin.params.AnnotatedParameter
 import java.lang.reflect.Method
 
@@ -44,7 +45,7 @@ internal open class AnnotatedMethod(val annotationMethod: Method) {
     /**
      * Get roles for user access
      */
-    open fun getAccessRole(): RouteRole = throw Exception("Override me")
+    open fun getAccess(): List<String> = throw Exception("Override me")
 
     /**
      * Map all annotated parameters to its typed value
@@ -60,6 +61,12 @@ internal open class AnnotatedMethod(val annotationMethod: Method) {
             getWebServerHandlerType(),
             getWebServerRoute(),
             generateWebServerHandler(),
-            getAccessRole())
+            *getAccessRoles())
     }
+
+    private fun getAccessRoles(): Array<RouteRole> =
+        getAccess()
+            .filter {it.isNotEmpty() }
+            .map { JavalinAnnotation.getRole(it) }
+            .toTypedArray()
 }

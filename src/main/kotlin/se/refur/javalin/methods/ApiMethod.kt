@@ -31,9 +31,9 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
 
     /**
      * Route access
-     * @see AnnotatedMethod.getAccessRole
+     * @see AnnotatedMethod.getAccess
      */
-    override fun getAccessRole(): RouteRole = JavalinAnnotation.getRole(annotation.accessRole)
+    override fun getAccess(): List<String> = listOf(annotation.accessRole)
 
     /**
      * Generate handler for the api call
