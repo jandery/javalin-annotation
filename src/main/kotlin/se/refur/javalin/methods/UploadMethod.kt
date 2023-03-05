@@ -1,12 +1,9 @@
 package se.refur.javalin.methods
 
-import io.javalin.core.security.RouteRole
 import io.javalin.http.Handler
 import io.javalin.http.HandlerType
-import se.refur.javalin.JavalinAnnotation
 import se.refur.javalin.Upload
 import java.lang.reflect.Method
-import javax.servlet.MultipartConfigElement
 
 /**
  * The purpose of this
@@ -31,9 +28,9 @@ internal class UploadMethod(method: Method) : AnnotatedMethod(method) {
 
     /**
      * Route access
-     * @see AnnotatedMethod.getAccessRole
+     * @see AnnotatedMethod.getAccess
      */
-    override fun getAccessRole(): RouteRole = JavalinAnnotation.getRole(annotation.accessRole)
+    override fun getAccess(): List<String> = listOf(annotation.accessRole)
 
     override fun generateWebServerHandler(): Handler = Handler { ctx ->
         ctx.uploadedFile("")
