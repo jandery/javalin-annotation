@@ -4,6 +4,7 @@ import io.javalin.http.HandlerType
 import se.refur.javalin.Api
 import se.refur.javalin.Page
 
+@Suppress("unused")
 class SecondExposedClass {
 
     @Page(type = HandlerType.GET, path = "/second", templatePath = "", accessRole = "PUBLIC")
