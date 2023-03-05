@@ -12,7 +12,16 @@ class JavalinAnnotationTest {
     private val rolesAsMap = MyRoles.values().associateBy { it.name }
 
     @Test
-    fun getRole_noRolesSetup_exception() {
+    fun setRole_emptyList_exception() {
+        JavalinAnnotation.setRoles(emptyList())
+        Assertions.assertThatThrownBy {
+            JavalinAnnotation.getRole("NON_EXISTING")
+        }
+            .isExactlyInstanceOf(Exception::class.java)
+            .hasMessage("No role matching 'NON_EXISTING'")
+    }
+    @Test
+    fun setRole_emptyMap_exception() {
         JavalinAnnotation.setRoles(emptyMap())
         Assertions.assertThatThrownBy {
             JavalinAnnotation.getRole("NON_EXISTING")
@@ -32,8 +41,15 @@ class JavalinAnnotationTest {
     }
 
     @Test
-    fun getRole_matchingRole_ADMIN() {
+    fun setRole_setAsMap_ADMIN() {
         JavalinAnnotation.setRoles(rolesAsMap)
+        val role = JavalinAnnotation.getRole("ADMIN")
+        assertThat(role).isEqualTo(MyRoles.ADMIN)
+    }
+
+    @Test
+    fun setRole_setAsList_ADMIN() {
+        JavalinAnnotation.setRoles(MyRoles.values().toList())
         val role = JavalinAnnotation.getRole("ADMIN")
         assertThat(role).isEqualTo(MyRoles.ADMIN)
     }

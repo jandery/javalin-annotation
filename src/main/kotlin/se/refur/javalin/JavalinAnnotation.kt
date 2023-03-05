@@ -18,6 +18,10 @@ object JavalinAnnotation {
         availableRoles = map
     }
 
+    fun setRoles(list: List<RouteRole>) {
+        availableRoles = list.associateBy { it.toString() }
+    }
+
     /**
      * Get role for endpoint from String value
      */

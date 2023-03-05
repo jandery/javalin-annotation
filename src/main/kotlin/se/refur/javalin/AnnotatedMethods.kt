@@ -14,7 +14,12 @@ import io.javalin.http.HandlerType
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Page(val type: HandlerType, val path: String, val templatePath: String, val accessRole: String)
+annotation class Page(
+    val type: HandlerType,
+    val path: String,
+    val templatePath: String,
+    val accessRole: String = ""
+)
 
 /**
  * The purpose of this annotation is to register an API endpoint
@@ -25,7 +30,11 @@ annotation class Page(val type: HandlerType, val path: String, val templatePath:
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Api(val type: HandlerType, val path: String, val accessRole: String)
+annotation class Api(
+    val type: HandlerType,
+    val path: String,
+    val accessRole: String = ""
+)
 
 /**
  * The purpose of this annotation is to register an API endpoint that should set one or more cookies
@@ -37,7 +46,11 @@ annotation class Api(val type: HandlerType, val path: String, val accessRole: St
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class ApiCookie(val type: HandlerType, val path: String, val accessRole: String)
+annotation class ApiCookie(
+    val type: HandlerType,
+    val path: String,
+    val accessRole: String = ""
+)
 
 /**
  * The purpose of annotation is to register a file download endpoint
@@ -50,9 +63,22 @@ annotation class ApiCookie(val type: HandlerType, val path: String, val accessRo
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Download(val type: HandlerType, val path: String, val contentType: ContentType,
-                          val downloadAs: String, val accessRole: String)
+annotation class Download(
+    val type: HandlerType,
+    val path: String,
+    val contentType: ContentType,
+    val downloadAs: String,
+    val accessRole: String = ""
+)
 
+/**
+ * The purpose of annotation is to register a file upload endpoint
+ * // TODO: Under construction
+ */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Upload(val path: String, val accessRole: String)
+annotation class Upload(
+    val path: String,
+    val accessRole: String = ""
+)
+

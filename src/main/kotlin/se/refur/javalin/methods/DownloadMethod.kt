@@ -30,10 +30,9 @@ internal class DownloadMethod(method: Method) : AnnotatedMethod(method) {
 
     /**
      * Route access
-     * @see AnnotatedMethod.getAccessRole
+     * @see AnnotatedMethod.getAccess
      */
-    override fun getAccessRole(): RouteRole = JavalinAnnotation.getRole(annotation.accessRole)
-
+    override fun getAccess(): List<String> = listOf(annotation.accessRole)
 
     override fun generateWebServerHandler(): Handler = Handler { ctx ->
         // Get arguments from annotated parameters
