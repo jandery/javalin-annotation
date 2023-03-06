@@ -6,7 +6,7 @@
 
     <groupId>se.refur</groupId>
     <artifactId>javalin</artifactId>
-    <version>1.2.4-SNAPSHOT</version>
+    <version>1.2.5-SNAPSHOT</version>
 
     <name>Javalin Annotation</name>
     <description>Allows Javalin Web framework to expose endpoints with annotation</description>
@@ -26,7 +26,7 @@
         <junit.version>5.9.2</junit.version>
         <log4j.version>1.7.36</log4j.version>
         <!-- Mocking library for kotlin. https://mockk.io/ -->
-        <mockk.version>1.12.5</mockk.version>
+        <mockk.version>1.12.4</mockk.version>
 
         <refur-maven-repo>maven-repo.refur.se</refur-maven-repo>
     </properties>
