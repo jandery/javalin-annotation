@@ -73,7 +73,6 @@ annotation class Download(
 
 /**
  * The purpose of annotation is to register a file upload endpoint
- * // TODO: Under construction
  * @property path Route path for endpoint
  * @property accessRole optional, role that should be able to access endpoint. Omitted will add endpoint without access role.
  */
