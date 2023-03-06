@@ -28,23 +28,10 @@ Include the following in your POM:
         <dependency>
             <groupId>se.refur</groupId>
             <artifactId>javalin</artifactId>
-            <version>1.1.1</version>
+            <version>1.2.0</version>
         </dependency>
     </dependencies>    
 </project>
-```
-
-##### Configuration
-Role management needs to be setup before endpoints can be exposed
-```kotlin
-import io.javalin.core.security.RouteRole
-
-// Available roles
-enum class MyAccessRoles : RouteRole {
-    PUBLIC, ADMIN
-}
-// Setup roles for endpoints
-JavalinAnnotation.setRoles(MyRoles.values().associateBy { it.name })
 ```
 
 ##### Annotations for endpoints
@@ -56,22 +43,40 @@ Endpoints to be exposed by Javalin should be annotated with
 
 @ApiCookie, for setting cookies. These methods must return map of key/value for cookies to set (Map<String, String>).
 
+@Download, for downloading files. These methods must return file as ByteArray.
+
+@Upload, for uploading files. These methods must contain ByteArray parameter and return a String.
+
 ```kotlin
 package se.refur.example.first
 
 class FirstExample {
     
-    @Page(type = HandlerType.GET, path = "/page/first", templatePath = "example/first.ftl", accessRole = "PUBLIC")
+    @Page(type = HandlerType.GET, path = "/page/first", templatePath = "example/first.ftl")
     fun pageEndpoint(): Map<String, Any> = emptyMap()
 
-    @Api(type = HandlerType.POST, path = "/api/first", accessRole = "ADMIN")
+    @Api(type = HandlerType.POST, path = "/api/first")
     fun apiEndpoint(): String = "success"
 
-    @ApiCookie(type = HandlerType.POST, path = "/api/login", accessRole = "PUBLIC")
+    @ApiCookie(type = HandlerType.POST, path = "/api/login")
     fun apiLogin(
         @Param("userName", ParameterType.FORM) loginName: String,
         @Param("userPassword", ParameterType.FORM) loginPwd: String
     ): Map<String, String> = mapOf("authCookie" to loginUser(loginName, loginPwd))
+
+    @Download(type = HandlerType.GET, path = "/file/download", contentType = ContentType.TEXT_CSV,
+        downloadAs = "downloaded-csv.csv")
+    fun downloadFile(): ByteArray {
+        val values: String = "Column A\tColumn B\tColumn C\tColumn D\r\nRow 1A\tRow 1B\tRow 1C\tRow 1D"
+        return values.toByteArray()
+    }
+
+    @Upload(path = "/file/upload")
+    fun uploadFile(
+        @Param(paramName = "fileContent", parameterType = ParameterType.FORM) fileContent: ByteArray
+    ): String {
+        return "file size ${fileContent.size}"
+    }
 }
 ```
 
@@ -93,21 +98,21 @@ package se.refur.example.second
 
 class SecondExample {
 
-    @Api(type = HandlerType.GET, path = "/api/second/{name}/{age}/{date}", accessRole = "ADMIN")
+    @Api(type = HandlerType.GET, path = "/api/second/{name}/{age}/{date}")
     fun apiRouteEndpoint(
         @Param("name", ParameterType.ROUTE) userName: String,
         @Param("age", ParameterType.ROUTE) userAge: Int,
         @Param("date", ParameterType.ROUTE) requestDate: LocalDate
     ): String = "success"
 
-    @Api(type = HandlerType.GET, path = "/api/second", accessRole = "ADMIN")
+    @Api(type = HandlerType.GET, path = "/api/second")
     fun apiQueryEndpoint(
         @Param("name", ParameterType.QUERY) userName: String,
         @Param("age", ParameterType.QUERY) userAge: Int,
         @Param("date", ParameterType.QUERY) requestDate: LocalDate
     ): String = "success"
 
-    @Api(type = HandlerType.POST, path = "/api/second", accessRole = "ADMIN")
+    @Api(type = HandlerType.POST, path = "/api/second")
     fun apiFormEndpoint(
         @Param("name", ParameterType.FORM) userName: String,
         @Param("age", ParameterType.FORM) userAge: Int,
@@ -115,11 +120,27 @@ class SecondExample {
         @Param("active", ParameterType.FORM) isActive: Boolean
     ): String = "success"
 
-    @Api(type = HandlerType.PUT, path = "/api/second", accessRole = "ADMIN")
+    @Api(type = HandlerType.PUT, path = "/api/second")
     fun apiCookieEndpoint(
         @Param("auth", ParameterType.COOKIE) userToken: String
     ): String = "success"
 }
+```
+
+##### Endpoint access
+Role management needs to be setup before endpoints can be exposed
+```kotlin
+import io.javalin.core.security.RouteRole
+
+// Available roles
+enum class MyAccessRoles : RouteRole {
+    PUBLIC, ADMIN
+}
+// Setup roles for endpoints
+JavalinAnnotation.setRoles(MyRoles.values())
+
+// Access for endpoint
+@Api(type = HandlerType.POST, path = "/api/second", accessRole = "ADMIN")
 ```
 
 ##### Setup of Javalin endpoints using annotations
