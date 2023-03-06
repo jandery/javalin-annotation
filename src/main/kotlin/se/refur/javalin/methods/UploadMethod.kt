@@ -32,7 +32,13 @@ internal class UploadMethod(method: Method) : AnnotatedMethod(method) {
      */
     override fun getAccess(): List<String> = listOf(annotation.accessRole)
 
+    /**
+     *
+     */
     override fun generateWebServerHandler(): Handler = Handler { ctx ->
-        ctx.uploadedFile("")
+        // Get arguments from annotated parameters
+        val args = mapParametersToTypeArguments(ctx)
+        annotationMethod.invoke(obj, *args.toTypedArray())
+        ctx.status(200).result("OK")
     }
 }

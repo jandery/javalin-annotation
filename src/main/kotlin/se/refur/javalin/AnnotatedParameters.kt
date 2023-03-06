@@ -16,8 +16,7 @@ annotation class Param(val paramName: String, val parameterType: ParameterType)
  * The purpose of this enum is hold types of parameters
  * @property ROUTE route parameter, f.x. /api/{PARAM}
  * @property QUERY query parameter, f.x. /api?{PARAM}=value
- * @property FORM form parameter, f.x. jquery.ajax({data:})
- * in JS ServerCaller("/api", "POST").addArg("{PARAM}", "value")
+ * @property FORM form parameter, f.x. jquery.ajax({data:{PARAM:"value"}})
  * @property COOKIE stored cookie
  */
 enum class ParameterType {

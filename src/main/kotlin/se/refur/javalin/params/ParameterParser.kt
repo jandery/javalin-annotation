@@ -124,7 +124,7 @@ internal object FormParamAsByteArray : IParameterParser {
         ctx.uploadedFile(paramName)
             ?.content
             ?.readAllBytes()
-            ?: "".toByteArray()
+            ?: throw Exception("No file content for parameter $paramName")
     }
 
     override fun getTypedValue(ctx: Context, paramName: String): Any =
