@@ -1,14 +1,12 @@
 package se.refur.javalin.methods
 
-import io.javalin.core.security.RouteRole
 import io.javalin.http.Handler
 import io.javalin.http.HandlerType
 import se.refur.javalin.Download
-import se.refur.javalin.JavalinAnnotation
 import java.lang.reflect.Method
 
 /**
- * The purpose of this
+ * The purpose of this class is generate web server handler for file download
  */
 internal class DownloadMethod(method: Method) : AnnotatedMethod(method) {
     /**

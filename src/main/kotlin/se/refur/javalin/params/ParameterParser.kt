@@ -119,6 +119,18 @@ internal object FormParamAsBoolean : IParameterParser {
         ctx.formParamAsClass(paramName, Boolean::class.java).get()
 }
 
+internal object FormParamAsByteArray : IParameterParser {
+    private val parser: (Context, String) -> Any = { ctx: Context, paramName: String ->
+        ctx.uploadedFile(paramName)
+            ?.content
+            ?.readAllBytes()
+            ?: "".toByteArray()
+    }
+
+    override fun getTypedValue(ctx: Context, paramName: String): Any =
+        parseWithException(parser, ctx, paramName, ByteArray::class.java.simpleName)
+}
+
 /**
  * Read a cookie
  */

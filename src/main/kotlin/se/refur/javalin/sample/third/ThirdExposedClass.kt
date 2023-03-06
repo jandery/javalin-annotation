@@ -4,7 +4,7 @@ import io.javalin.http.HandlerType
 import se.refur.javalin.Api
 import se.refur.javalin.Page
 
-
+@Suppress("unused")
 class ThirdExposedClass {
 
     @Page(type = HandlerType.GET, path = "/third", templatePath = "")

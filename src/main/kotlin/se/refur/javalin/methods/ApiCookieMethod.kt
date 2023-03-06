@@ -1,10 +1,8 @@
 package se.refur.javalin.methods
 
-import io.javalin.core.security.RouteRole
 import io.javalin.http.Handler
 import io.javalin.http.HandlerType
 import se.refur.javalin.ApiCookie
-import se.refur.javalin.JavalinAnnotation
 import java.lang.reflect.Method
 
 /**

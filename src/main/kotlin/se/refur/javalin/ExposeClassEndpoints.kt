@@ -1,6 +1,7 @@
 package se.refur.javalin
 
 import io.javalin.Javalin
+import se.refur.javalin.methods.*
 import se.refur.javalin.methods.ApiCookieMethod
 import se.refur.javalin.methods.ApiMethod
 import se.refur.javalin.methods.DownloadMethod
@@ -41,6 +42,10 @@ fun <T : Any> Javalin.exposeClassEndpoints(clazz: Class<T>): Javalin {
 
     allClassMethods.filter { it.isAnnotationPresent(Download::class.java) }
         .map { DownloadMethod(it) }
+        .forEach { it.addHandler(this) }
+
+    allClassMethods.filter { it.isAnnotationPresent(Upload::class.java) }
+        .map { UploadMethod(it) }
         .forEach { it.addHandler(this) }
 
     // Return this for chaining

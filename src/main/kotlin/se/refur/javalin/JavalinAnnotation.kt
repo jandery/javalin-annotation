@@ -13,13 +13,21 @@ object JavalinAnnotation {
      * Example:
      * enum class MyRoles : RouteRoles { ADMIN, PUBLIC }
      * JavalinAnnotation.setRoles(MyRoles.values().associateBy { it.name })
+     * @param mapOfRoles map of "RoleName" to Role : RouteRole
      */
-    fun setRoles(map: Map<String, RouteRole>) {
-        availableRoles = map
+    fun setRoles(mapOfRoles: Map<String, RouteRole>) {
+        availableRoles = mapOfRoles
     }
 
-    fun setRoles(list: List<RouteRole>) {
-        availableRoles = list.associateBy { it.toString() }
+    /**
+     * Set roles
+     * Example:
+     * enum class MyRoles : RouteRoles { ADMIN, PUBLIC }
+     * JavalinAnnotation.setRoles(MyRoles.values())
+     * @param listOfRoles map of Role : RouteRole
+     */
+    fun setRoles(listOfRoles: List<RouteRole>) {
+        availableRoles = listOfRoles.associateBy { it.toString() }
     }
 
     /**
