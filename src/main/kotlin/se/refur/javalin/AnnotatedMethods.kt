@@ -10,7 +10,7 @@ import io.javalin.http.HandlerType
  * @property type Type of endpoint
  * @property path Route path for endpoint
  * @property templatePath path for Freemarker template
- * @property accessRole role that should be able to access endpoint
+ * @property accessRole optional, role that should be able to access endpoint. Omitted will add endpoint without access role.
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
@@ -26,7 +26,7 @@ annotation class Page(
  * Return for functions annotated with this is expected to return String
  * @property type Type of endpoint
  * @property path Route path for endpoint
- * @property accessRole role that should be able to access endpoint
+ * @property accessRole optional, role that should be able to access endpoint. Omitted will add endpoint without access role.
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
@@ -42,7 +42,7 @@ annotation class Api(
  *      Map<String, String>
  * @property type Type of endpoint
  * @property path Route path for endpoint
- * @property accessRole role that should be able to access endpoint
+ * @property accessRole optional, role that should be able to access endpoint. Omitted will add endpoint without access role.
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
@@ -59,7 +59,7 @@ annotation class ApiCookie(
  * @property path Route path for endpoint
  * @property contentType content type of file to download
  * @property downloadAs default file name for download
- * @property accessRole role that should be able to access endpoint
+ * @property accessRole optional, role that should be able to access endpoint. Omitted will add endpoint without access role.
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
@@ -74,6 +74,8 @@ annotation class Download(
 /**
  * The purpose of annotation is to register a file upload endpoint
  * // TODO: Under construction
+ * @property path Route path for endpoint
+ * @property accessRole optional, role that should be able to access endpoint. Omitted will add endpoint without access role.
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
