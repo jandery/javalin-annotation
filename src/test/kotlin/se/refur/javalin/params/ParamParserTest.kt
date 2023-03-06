@@ -1,6 +1,7 @@
 package se.refur.javalin.params
 
 import io.javalin.http.Context
+import io.javalin.http.UploadedFile
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
@@ -71,5 +72,61 @@ class ParamParserTest {
         }
             .isExactlyInstanceOf(Exception::class.java)
             .hasMessage("Could not parse 'date' to 'LocalDate'")
+    }
+
+    @Test
+    fun fileParamAsByteArray_validAsByteArray_isByteArray() {
+        val fileContent = "This is an uploaded file".toByteArray()
+        val ctx = mockk<Context>().also {
+            every { it.uploadedFile("theFile") } returns UploadedFile(
+                content = fileContent.inputStream(),
+                contentType = "txt",
+                filename = "tada",
+                extension = "txt",
+                size = fileContent.size.toLong()
+            )
+        }
+        val uploadedFile = FileParamAsByteArray.getTypedValue(ctx, "theFile")
+        assertThat(uploadedFile).isInstanceOf(ByteArray::class.java)
+    }
+
+    @Test
+    fun fileParamAsByteArray_isNull_exceptionIsThrown() {
+        val ctx = mockk<Context>().also {
+            every { it.uploadedFile("theFile") } returns null
+        }
+        assertThatThrownBy {
+            FileParamAsByteArray.getTypedValue(ctx, "theFile")
+        }
+            .isExactlyInstanceOf(Exception::class.java)
+            .hasMessage("Could not parse 'theFile' to 'byte[]'")
+    }
+
+    @Test
+    fun fileParamAsString_validAsString_isString() {
+        val fileContent = "This is an uploaded file".toByteArray()
+        val ctx = mockk<Context>().also {
+            every { it.uploadedFile("theFile") } returns UploadedFile(
+                content = fileContent.inputStream(),
+                contentType = "txt",
+                filename = "tada",
+                extension = "txt",
+                size = fileContent.size.toLong()
+            )
+        }
+        val uploadedFile = FileParamAsString.getTypedValue(ctx, "theFile")
+        assertThat(uploadedFile).isInstanceOf(String::class.java)
+    }
+
+    @Test
+    fun fileParamAsString_isNull_exceptionIsThrown() {
+        val ctx = mockk<Context>().also {
+            every { it.uploadedFile("theFile") } returns null
+        }
+        assertThatThrownBy {
+            FileParamAsString.getTypedValue(ctx, "theFile")
+        }
+            .isExactlyInstanceOf(Exception::class.java)
+            .hasMessage("Could not parse 'theFile' to 'String'")
     }
 }
