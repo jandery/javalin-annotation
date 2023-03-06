@@ -65,17 +65,18 @@ class FirstExample {
     ): Map<String, String> = mapOf("authCookie" to loginUser(loginName, loginPwd))
 
     @Download(type = HandlerType.GET, path = "/file/download", contentType = ContentType.TEXT_CSV,
-        downloadAs = "downloaded-csv.csv")
+        downloadAs = "download.csv")
     fun downloadFile(): ByteArray {
-        val values: String = "Column A\tColumn B\tColumn C\tColumn D\r\nRow 1A\tRow 1B\tRow 1C\tRow 1D"
+        val values = "Column A\tColumn B\tColumn C\tColumn D\r\nRow 1A\tRow 1B\tRow 1C\tRow 1D"
         return values.toByteArray()
     }
 
     @Upload(path = "/file/upload")
     fun uploadFile(
-        @Param(paramName = "fileContent", parameterType = ParameterType.FORM) fileContent: ByteArray
+        @Param(paramName = "fileContent", parameterType = ParameterType.FILE) fileContent: ByteArray,
+        @Param(paramName = "fileContent", parameterType = ParameterType.FILE) originalFileName: String
     ): String {
-        return "file size ${fileContent.size}"
+        return "file size is ${fileContent.size} for uploaded file $originalFileName"
     }
 }
 ```
@@ -136,24 +137,45 @@ import io.javalin.core.security.RouteRole
 enum class MyAccessRoles : RouteRole {
     PUBLIC, ADMIN
 }
+
 // Setup roles for endpoints
 JavalinAnnotation.setRoles(MyRoles.values())
-
 // Access for endpoint
 @Api(type = HandlerType.POST, path = "/api/second", accessRole = "ADMIN")
+fun apiPath(): String = ""
+
+// OR
+
+// Setup roles for endpoints
+JavalinAnnotation.setRoles(mapOf("a" to MyAccessRoles.ADMIN, "p" to MyAccessRoles.PUBLIC))
+// Access for endpoint
+@Api(type = HandlerType.POST, path = "/api/second", accessRole = "a")
+fun apiPath(): String = ""
 ```
 
 ##### Setup of Javalin endpoints using annotations
 Setup endpoints
+
 ```kotlin
+
+import io.javalin.Javalin
+
+// Without Endpoint access
+Javalin.create()
+// expose endpoints via package
+    .exposePackageEndpoints("se.refur.example.first")
+    // expose endpoints via class
+    .exposeClassEndpoints(SecondExample::class)
+
+// With Endpoint access
 Javalin
     // web server configuration
     .create { config: JavalinConfig ->
-        // ...
+        config.accessManager { handler, ctx, _ -> /* Restrict access here */ handler.handle(ctx) }
     }
     // expose endpoints via package
     .exposePackageEndpoints("se.refur.example.first")
     // expose endpoints via class
     .exposeClassEndpoints(SecondExample::class)
-    
+
 ```

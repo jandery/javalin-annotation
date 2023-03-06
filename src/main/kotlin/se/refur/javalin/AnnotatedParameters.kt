@@ -18,7 +18,8 @@ annotation class Param(val paramName: String, val parameterType: ParameterType)
  * @property QUERY query parameter, f.x. /api?{PARAM}=value
  * @property FORM form parameter, f.x. jquery.ajax({data:{PARAM:"value"}})
  * @property COOKIE stored cookie
+ * @property FILE uploaded file
  */
 enum class ParameterType {
-    ROUTE, QUERY, FORM, COOKIE
+    ROUTE, QUERY, FORM, COOKIE, FILE
 }

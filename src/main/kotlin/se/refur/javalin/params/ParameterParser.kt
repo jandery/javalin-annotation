@@ -119,7 +119,10 @@ internal object FormParamAsBoolean : IParameterParser {
         ctx.formParamAsClass(paramName, Boolean::class.java).get()
 }
 
-internal object FormParamAsByteArray : IParameterParser {
+/**
+ * Read file content of uploaded file
+ */
+internal object FileParamAsByteArray : IParameterParser {
     private val parser: (Context, String) -> Any = { ctx: Context, paramName: String ->
         ctx.uploadedFile(paramName)
             ?.content
@@ -129,6 +132,20 @@ internal object FormParamAsByteArray : IParameterParser {
 
     override fun getTypedValue(ctx: Context, paramName: String): Any =
         parseWithException(parser, ctx, paramName, ByteArray::class.java.simpleName)
+}
+
+/**
+ * Read file name of uploaded file
+ */
+internal object FileParamAsString : IParameterParser {
+    private val parser: (Context, String) -> Any = { ctx: Context, paramName: String ->
+        ctx.uploadedFile(paramName)
+            ?.filename
+            ?: throw Exception("No filename for parameter $paramName")
+    }
+
+    override fun getTypedValue(ctx: Context, paramName: String): Any =
+        parseWithException(parser, ctx, paramName, String::class.java.simpleName)
 }
 
 /**

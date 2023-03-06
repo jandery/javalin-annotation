@@ -53,6 +53,7 @@ private val parameterParsers: Map<Pair<ParameterType, String>, IParameterParser>
     Pair(ParameterType.FORM, Int::class.java.simpleName) to FormParamAsInt,
     Pair(ParameterType.FORM, LocalDate::class.java.simpleName) to FormParamAsLocalDate,
     Pair(ParameterType.FORM, Boolean::class.java.simpleName) to FormParamAsBoolean,
-    Pair(ParameterType.FORM, ByteArray::class.java.simpleName) to FormParamAsByteArray,
+    Pair(ParameterType.FILE, ByteArray::class.java.simpleName) to FileParamAsByteArray,
+    Pair(ParameterType.FILE, String::class.java.simpleName) to FileParamAsString,
     Pair(ParameterType.COOKIE, String::class.java.simpleName) to CookieValueAsString
 )
