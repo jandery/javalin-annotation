@@ -28,7 +28,7 @@ Include the following in your POM:
         <dependency>
             <groupId>se.refur</groupId>
             <artifactId>javalin</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.2</version>
         </dependency>
     </dependencies>    
 </project>
@@ -39,24 +39,48 @@ Endpoints to be exposed by Javalin should be annotated with
 
 @Page, for web pages rendering using rendering engine. These methods must return a rendering map (Map<String, Any>).
 
-@Api, for api request. These methods must return a String.
+@Api, for api request.
 
 @ApiCookie, for setting cookies. These methods must return map of key/value for cookies to set (Map<String, String>).
 
 @Download, for downloading files. These methods must return file as ByteArray.
 
-@Upload, for uploading files. These methods must contain ByteArray parameter and return a String.
+@Upload, for uploading files. These methods must contain ByteArray parameter.
 
 ```kotlin
 package se.refur.example.first
+
+data class MyDataClass(
+    val name: String,
+    val birthDay: LocalDate,
+    val heightCm: Int,
+    val isGood: Boolean
+)
 
 class FirstExample {
     
     @Page(type = HandlerType.GET, path = "/page/first", templatePath = "example/first.ftl")
     fun pageEndpoint(): Map<String, Any> = emptyMap()
 
-    @Api(type = HandlerType.POST, path = "/api/first")
-    fun apiEndpoint(): String = "success"
+    // Return parameter : String
+    @Api(type = HandlerType.GET, path = "/api/second/string", accessRole = "PUBLIC")
+    fun apiStringHandler(): String = "API response for SecondExposedClass"
+
+    // Return parameter : Int
+    @Api(type = HandlerType.GET, path = "/api/second/int", accessRole = "PUBLIC")
+    fun apiIntHandler(): Int = 42
+
+    // Return parameter : Boolean
+    @Api(type = HandlerType.GET, path = "/api/second/bool", accessRole = "PUBLIC")
+    fun apiBoolHandler(): Boolean = false
+
+    // Return parameter : Data class
+    @Api(type = HandlerType.GET, path = "/api/second/obj", accessRole = "PUBLIC")
+    fun apiObjectHandler(): MyDataClass = MyDataClass(
+        name = "Someone",
+        birthDay = LocalDate.parse("1971-01-01"),
+        heightCm = 177,
+        isGood = true)
 
     @ApiCookie(type = HandlerType.POST, path = "/api/login")
     fun apiLogin(
@@ -167,11 +191,18 @@ Javalin.create()
     // expose endpoints via class
     .exposeClassEndpoints(SecondExample::class)
 
-// With Endpoint access
+// With Endpoint access, and data classes (with local-date) as return objects
 Javalin
     // web server configuration
     .create { config: JavalinConfig ->
+        // Access handler
         config.accessManager { handler, ctx, _ -> /* Restrict access here */ handler.handle(ctx) }
+        // Jackson/Json parser setup
+        config.jsonMapper(
+            JavalinJackson(
+                ObjectMapper()
+                    .registerModule(JavaTimeModule())
+                    .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)))
     }
     // expose endpoints via package
     .exposePackageEndpoints("se.refur.example.first")

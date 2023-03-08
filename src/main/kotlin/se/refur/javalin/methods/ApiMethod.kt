@@ -45,6 +45,6 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
         // Render result
         ctx.status(200)
             .contentType(ContentType.TEXT_HTML)
-            .result(response.toString())
+            .json(response)
     }
 }

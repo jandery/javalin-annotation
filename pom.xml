@@ -57,13 +57,25 @@
         </dependency>
         <dependency>
             <groupId>io.javalin</groupId>
-            <artifactId>javalin</artifactId>
+            <artifactId>javalin-bundle</artifactId>
             <version>${javalin.version}</version>
+            <!-- Removes warning: SLF4J: Class path contains multiple SLF4J bindings. -->
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>${reflections.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -93,12 +105,6 @@
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-nop</artifactId>
-            <version>${log4j.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

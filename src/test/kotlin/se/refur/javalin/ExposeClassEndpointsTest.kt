@@ -1,7 +1,11 @@
 package se.refur.javalin
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import io.javalin.Javalin
 import io.javalin.core.security.RouteRole
+import io.javalin.plugin.json.JavalinJackson
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.Connection
 import org.jsoup.Jsoup
@@ -21,10 +25,14 @@ class ExposeClassEndpointsTest {
         JavalinAnnotation.setRoles(JavalinRoleEnum.values().associateBy { it.name })
     }
 
-
     private val javalin: Javalin = Javalin
         .create { config ->
             config.accessManager { handler, ctx, _ -> handler.handle(ctx) }
+            config.jsonMapper(
+                JavalinJackson(
+                    ObjectMapper()
+                        .registerModule(JavaTimeModule())
+                        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)))
         }
         .exposeClassEndpoints(SecondExposedClass::class)
 
@@ -84,6 +92,19 @@ class ExposeClassEndpointsTest {
             .followRedirects(false)
             .execute()
         assertThat(jsoupResponse.body()).isEqualTo(false.toString())
+    }
+
+    @Test
+    fun `API request _ exposed obj handler _ api response`() {
+        val jsoupResponse: Connection.Response = Jsoup
+            .connect("http://localhost:$testPortNumber/api/second/obj")
+            .method(Connection.Method.GET)
+            .ignoreContentType(true)
+            .ignoreHttpErrors(true)
+            .followRedirects(false)
+            .execute()
+        assertThat(jsoupResponse.body()).isEqualTo(
+            """{"name":"Someone","birthDay":"1971-01-01","heightCm":177,"good":true}""")
     }
 
     @Test
