@@ -41,10 +41,10 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
         // Get arguments from annotated parameters
         val args = mapParametersToTypeArguments(ctx)
         // Call method with typed arguments
-        val response: String = annotationMethod.invoke(obj, *args.toTypedArray()) as String
+        val response: Any = annotationMethod.invoke(obj, *args.toTypedArray())
         // Render result
         ctx.status(200)
             .contentType(ContentType.TEXT_HTML)
-            .result(response)
+            .result(response.toString())
     }
 }
