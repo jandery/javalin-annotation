@@ -12,6 +12,9 @@ import java.util.concurrent.CompletableFuture
  * Context.json(response)       will fail for String/Int/Booleans
  * This seems to solve both of them
  */
-internal fun Context.primitiveOrJson(response: Any): Context =
+internal fun Context.primitiveOrJson(response: Any) {
+    this.res.characterEncoding = "UTF-8"
     this.status(200)
         .future(CompletableFuture.completedFuture(response))
+}
+

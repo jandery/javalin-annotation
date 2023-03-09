@@ -59,7 +59,7 @@ class ExposeClassEndpointsTest {
     }
 
     @Test
-    fun `API request _ exposed string handler _ api response`() {
+    fun `API request _ exposed string handler _ response for UTF-8`() {
         val jsoupResponse: Connection.Response = Jsoup
             .connect("http://localhost:$testPortNumber/api/second/string")
             .method(Connection.Method.GET)
@@ -67,7 +67,7 @@ class ExposeClassEndpointsTest {
             .ignoreHttpErrors(true)
             .followRedirects(false)
             .execute()
-        assertThat(jsoupResponse.body()).isEqualTo("API response for SecondExposedClass")
+        assertThat(jsoupResponse.body()).isEqualTo("Validate: åäöÅÄÖ%&?")
     }
 
     @Test

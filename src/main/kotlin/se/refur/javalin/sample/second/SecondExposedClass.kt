@@ -12,7 +12,7 @@ class SecondExposedClass {
     fun pageHandler(): Map<String, Any> = emptyMap()
 
     @Api(type = HandlerType.GET, path = "/api/second/string", accessRole = "PUBLIC")
-    fun apiStringHandler(): String = "API response for SecondExposedClass"
+    fun apiStringHandler(): String = "Validate: åäöÅÄÖ%&?"
 
     @Api(type = HandlerType.GET, path = "/api/second/int", accessRole = "PUBLIC")
     fun apiIntHandler(): Int = 42

@@ -2,10 +2,8 @@ package se.refur.javalin.methods
 
 import io.javalin.http.Handler
 import io.javalin.http.HandlerType
-import io.javalin.http.contextResolver
 import se.refur.javalin.Api
 import java.lang.reflect.Method
-import java.util.concurrent.CompletableFuture
 
 /**
  * The purpose of this class is generate web server handler for an API route
