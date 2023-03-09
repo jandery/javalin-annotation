@@ -45,7 +45,6 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
         // Render result
         try {
             ctx.status(200)
-                .contentType(ContentType.TEXT_PLAIN)
                 .json(response)
         } catch (e: Exception) {
             e.stackTrace.forEach {
