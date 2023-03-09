@@ -42,15 +42,14 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
         val args = mapParametersToTypeArguments(ctx)
         // Call method with typed arguments
         val response: Any = annotationMethod.invoke(obj, *args.toTypedArray())
-        // Render result
-        try {
-            ctx.status(200)
-                .json(response)
-        } catch (e: Exception) {
-            e.stackTrace.forEach {
-                println(it)
-            }
-        }
 
+        ctx.status(200)
+
+        when (response) {
+            is String -> ctx.result(response)
+            is Int -> ctx.result(response.toString())
+            is Boolean -> ctx.result(response.toString())
+            else -> ctx.json(response)
+        }
     }
 }
