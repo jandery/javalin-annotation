@@ -5,6 +5,7 @@ import io.javalin.http.HandlerType
 import io.javalin.http.contextResolver
 import se.refur.javalin.Api
 import java.lang.reflect.Method
+import java.util.concurrent.CompletableFuture
 
 /**
  * The purpose of this class is generate web server handler for an API route
@@ -42,6 +43,7 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
         val args = mapParametersToTypeArguments(ctx)
         // Call method with typed arguments
         val response: Any = annotationMethod.invoke(obj, *args.toTypedArray())
-        ctx.status(200).json(response).contextResolver()
+        //ctx.status(200).json(response).contextResolver()
+        ctx.status(200).future(CompletableFuture.completedFuture(response))
     }
 }
