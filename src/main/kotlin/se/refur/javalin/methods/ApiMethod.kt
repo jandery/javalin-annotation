@@ -43,8 +43,15 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
         // Call method with typed arguments
         val response: Any = annotationMethod.invoke(obj, *args.toTypedArray())
         // Render result
-        ctx.status(200)
-            .contentType(ContentType.TEXT_PLAIN)
-            .json(response)
+        try {
+            ctx.status(200)
+                .contentType(ContentType.TEXT_PLAIN)
+                .json(response)
+        } catch (e: Exception) {
+            e.stackTrace.forEach {
+                println(it)
+            }
+        }
+
     }
 }
