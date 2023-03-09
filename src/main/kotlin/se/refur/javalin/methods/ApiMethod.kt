@@ -44,7 +44,7 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
         val response: Any = annotationMethod.invoke(obj, *args.toTypedArray())
         // Render result
         ctx.status(200)
-            .contentType(ContentType.TEXT_HTML)
+            .contentType(ContentType.TEXT_PLAIN)
             .json(response)
     }
 }
