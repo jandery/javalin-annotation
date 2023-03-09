@@ -4,10 +4,6 @@ import io.javalin.Javalin
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import se.refur.javalin.methods.*
-import se.refur.javalin.methods.ApiCookieMethod
-import se.refur.javalin.methods.ApiMethod
-import se.refur.javalin.methods.DownloadMethod
-import se.refur.javalin.methods.PageMethod
 import java.lang.reflect.Method
 import kotlin.reflect.KClass
 

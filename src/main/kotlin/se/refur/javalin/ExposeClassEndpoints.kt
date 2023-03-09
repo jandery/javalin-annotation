@@ -2,10 +2,6 @@ package se.refur.javalin
 
 import io.javalin.Javalin
 import se.refur.javalin.methods.*
-import se.refur.javalin.methods.ApiCookieMethod
-import se.refur.javalin.methods.ApiMethod
-import se.refur.javalin.methods.DownloadMethod
-import se.refur.javalin.methods.PageMethod
 import java.lang.reflect.Method
 import kotlin.reflect.KClass
 
