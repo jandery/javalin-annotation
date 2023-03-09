@@ -44,6 +44,8 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
         // Call method with typed arguments
         val response: Any = annotationMethod.invoke(obj, *args.toTypedArray())
         //ctx.status(200).json(response).contextResolver()
-        ctx.status(200).future(CompletableFuture.completedFuture(response))
+        ctx.status(200)
+            .future(CompletableFuture.completedFuture(response))
+            .contextResolver()
     }
 }
