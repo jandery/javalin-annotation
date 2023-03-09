@@ -1,7 +1,6 @@
 package se.refur.javalin.methods
 
 import io.javalin.http.Context
-import io.javalin.http.contextResolver
 import java.util.concurrent.CompletableFuture
 
 /**
@@ -13,7 +12,6 @@ import java.util.concurrent.CompletableFuture
  * Context.json(response)       will fail for String/Int/Booleans
  * This seems to solve both of them
  */
-internal fun Context.primitiveOrJson(response: Any) =
+internal fun Context.primitiveOrJson(response: Any): Context =
     this.status(200)
         .future(CompletableFuture.completedFuture(response))
-        .contextResolver()
