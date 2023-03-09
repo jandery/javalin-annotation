@@ -2,8 +2,10 @@ package se.refur.javalin.methods
 
 import io.javalin.http.Handler
 import io.javalin.http.HandlerType
+import io.javalin.http.contextResolver
 import se.refur.javalin.Upload
 import java.lang.reflect.Method
+import java.util.concurrent.CompletableFuture
 
 /**
  * The purpose of this class is generate web server handler for file upload
@@ -41,7 +43,6 @@ internal class UploadMethod(method: Method) : AnnotatedMethod(method) {
         // Call method with typed arguments
         val response: Any = annotationMethod.invoke(obj, *args.toTypedArray())
         // Render result
-        ctx.status(200)
-            .json(response)
+        ctx.primitiveOrJson(response)
     }
 }
