@@ -2,6 +2,7 @@ package se.refur.javalin.methods
 
 import io.javalin.http.Handler
 import io.javalin.http.HandlerType
+import io.javalin.http.contextResolver
 import se.refur.javalin.Api
 import java.lang.reflect.Method
 
@@ -41,6 +42,6 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
         val args = mapParametersToTypeArguments(ctx)
         // Call method with typed arguments
         val response: Any = annotationMethod.invoke(obj, *args.toTypedArray())
-        ctx.status(200).json(response)
+        ctx.status(200).json(response).contextResolver()
     }
 }
