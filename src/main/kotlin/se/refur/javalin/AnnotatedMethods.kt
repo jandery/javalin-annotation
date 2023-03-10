@@ -27,13 +27,15 @@ annotation class Page(
  * @property type Type of endpoint
  * @property path Route path for endpoint
  * @property accessRole optional, role that should be able to access endpoint. Omitted will add endpoint without access role.
+ * @property description optional, description of method.
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Api(
     val type: HandlerType,
     val path: String,
-    val accessRole: String = ""
+    val accessRole: String = "",
+    val description: String = ""
 )
 
 /**
@@ -43,13 +45,15 @@ annotation class Api(
  * @property type Type of endpoint
  * @property path Route path for endpoint
  * @property accessRole optional, role that should be able to access endpoint. Omitted will add endpoint without access role.
+ * @property description optional, description of method
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class ApiCookie(
     val type: HandlerType,
     val path: String,
-    val accessRole: String = ""
+    val accessRole: String = "",
+    val description: String = ""
 )
 
 /**
@@ -60,6 +64,7 @@ annotation class ApiCookie(
  * @property contentType content type of file to download
  * @property downloadAs default file name for download
  * @property accessRole optional, role that should be able to access endpoint. Omitted will add endpoint without access role.
+ * @property description optional, description of method
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
@@ -68,18 +73,21 @@ annotation class Download(
     val path: String,
     val contentType: ContentType,
     val downloadAs: String,
-    val accessRole: String = ""
+    val accessRole: String = "",
+    val description: String = ""
 )
 
 /**
  * The purpose of annotation is to register a file upload endpoint
  * @property path Route path for endpoint
  * @property accessRole optional, role that should be able to access endpoint. Omitted will add endpoint without access role.
+ * @property description optional, description of method
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Upload(
     val path: String,
-    val accessRole: String = ""
+    val accessRole: String = "",
+    val description: String = ""
 )
 

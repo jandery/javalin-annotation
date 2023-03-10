@@ -4,11 +4,15 @@ package se.refur.javalin
  * The purpose of this annotation is to handle properties for annotated methods
  * @property paramName name of parameter in type
  * @property parameterType type of parameter
+ * @property description optional, description of parameter.
  * @see ParameterType
  */
 @Target(AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Param(val paramName: String, val parameterType: ParameterType)
+annotation class Param(
+    val paramName: String,
+    val parameterType: ParameterType,
+    val description: String = "")
 
 
 
