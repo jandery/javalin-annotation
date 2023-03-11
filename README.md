@@ -28,7 +28,7 @@ Include the following in your POM:
         <dependency>
             <groupId>se.refur</groupId>
             <artifactId>javalin</artifactId>
-            <version>1.2.2</version>
+            <version>1.3.0</version>
         </dependency>
     </dependencies>    
 </project>
@@ -48,7 +48,7 @@ Endpoints to be exposed by Javalin should be annotated with
 @Upload, for uploading files. These methods must contain ByteArray parameter.
 
 ```kotlin
-package se.refur.example.first
+package se.refur.examples
 
 data class MyDataClass(
     val name: String,
@@ -57,11 +57,12 @@ data class MyDataClass(
     val isGood: Boolean
 )
 
-class FirstExample {
-    
+class PageEndpointExample {
     @Page(type = HandlerType.GET, path = "/page/first", templatePath = "example/first.ftl")
     fun pageEndpoint(): Map<String, Any> = emptyMap()
+}
 
+class ApiEndpointExample {
     // Return parameter : String
     @Api(type = HandlerType.GET, path = "/api/second/string", accessRole = "PUBLIC")
     fun apiStringHandler(): String = "API response for SecondExposedClass"
@@ -77,24 +78,30 @@ class FirstExample {
     // Return parameter : Data class
     @Api(type = HandlerType.GET, path = "/api/second/obj", accessRole = "PUBLIC")
     fun apiObjectHandler(): MyDataClass = MyDataClass(
-        name = "Someone",
-        birthDay = LocalDate.parse("1971-01-01"),
-        heightCm = 177,
-        isGood = true)
+            name = "Someone",
+            birthDay = LocalDate.parse("1971-01-01"),
+            heightCm = 177,
+            isGood = true)
+}
 
+class ApiCookieEndpointExample {
     @ApiCookie(type = HandlerType.POST, path = "/api/login")
     fun apiLogin(
-        @Param("userName", ParameterType.FORM) loginName: String,
-        @Param("userPassword", ParameterType.FORM) loginPwd: String
-    ): Map<String, String> = mapOf("authCookie" to loginUser(loginName, loginPwd))
+            @Param("userName", ParameterType.FORM) loginName: String,
+            @Param("userPassword", ParameterType.FORM) loginPwd: String
+    ): Map<String, String> = mapOf("authCookie" to loginUser(loginName, loginPwd))    
+}
 
+class DownloadEndpointExample {
     @Download(type = HandlerType.GET, path = "/file/download", contentType = ContentType.TEXT_CSV,
-        downloadAs = "download.csv")
+            downloadAs = "download.csv")
     fun downloadFile(): ByteArray {
         val values = "Column A\tColumn B\tColumn C\tColumn D\r\nRow 1A\tRow 1B\tRow 1C\tRow 1D"
         return values.toByteArray()
-    }
+    }   
+}
 
+class UploadEndpointExample {
     @Upload(path = "/file/upload")
     fun uploadFile(
         @Param(paramName = "fileContent", parameterType = ParameterType.FILE) fileContent: ByteArray,
@@ -119,9 +126,9 @@ FORM, example jQuery.ajax({data:{strValue:"aValue",intValue:42,dateValue:"2022-1
 COOKIE, stored with @ApiCookie annotated method
 
 ```kotlin
-package se.refur.example.second
+package se.refur.examples
 
-class SecondExample {
+class ParameterExample {
 
     @Api(type = HandlerType.GET, path = "/api/second/{name}/{age}/{date}")
     fun apiRouteEndpoint(
@@ -171,9 +178,9 @@ fun apiPath(): String = ""
 // OR
 
 // Setup roles for endpoints
-JavalinAnnotation.setRoles(mapOf("a" to MyAccessRoles.ADMIN, "p" to MyAccessRoles.PUBLIC))
+JavalinAnnotation.setRoles(mapOf("adminRole" to MyAccessRoles.ADMIN, "publicRole" to MyAccessRoles.PUBLIC))
 // Access for endpoint
-@Api(type = HandlerType.POST, path = "/api/second", accessRole = "a")
+@Api(type = HandlerType.POST, path = "/api/second", accessRole = "adminRole")
 fun apiPath(): String = ""
 ```
 
@@ -187,7 +194,7 @@ import io.javalin.Javalin
 // Without Endpoint access
 Javalin.create()
 // expose endpoints via package
-    .exposePackageEndpoints("se.refur.example.first")
+    .exposePackageEndpoints("se.refur.examples")
     // expose endpoints via class
     .exposeClassEndpoints(SecondExample::class)
 
@@ -205,8 +212,8 @@ Javalin
                     .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)))
     }
     // expose endpoints via package
-    .exposePackageEndpoints("se.refur.example.first")
+    .exposePackageEndpoints("se.refur.examples")
     // expose endpoints via class
-    .exposeClassEndpoints(SecondExample::class)
+    .exposeClassEndpoints(ParameterExample::class)
 
 ```
