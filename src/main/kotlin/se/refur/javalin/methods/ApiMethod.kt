@@ -41,6 +41,6 @@ internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
         val args = mapParametersToTypeArguments(ctx)
         // Call method with typed arguments
         val response: Any = annotationMethod.invoke(obj, *args.toTypedArray())
-        ctx.primitiveOrJson(response)
+        ctx.status(200).json(response)
     }
 }

@@ -41,6 +41,6 @@ internal class UploadMethod(method: Method) : AnnotatedMethod(method) {
         // Call method with typed arguments
         val response: Any = annotationMethod.invoke(obj, *args.toTypedArray())
         // Render result
-        ctx.primitiveOrJson(response)
+        ctx.status(200).json(response)
     }
 }
