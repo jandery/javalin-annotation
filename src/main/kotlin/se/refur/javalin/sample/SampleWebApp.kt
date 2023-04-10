@@ -1,7 +1,7 @@
 package se.refur.javalin.sample
 
 import io.javalin.Javalin
-import io.javalin.core.security.RouteRole
+import io.javalin.security.RouteRole
 import se.refur.javalin.JavalinAnnotation
 import se.refur.javalin.exposeClassEndpoints
 import se.refur.javalin.exposePackageEndpoints

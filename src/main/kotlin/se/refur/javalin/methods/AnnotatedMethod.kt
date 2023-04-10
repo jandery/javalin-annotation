@@ -1,10 +1,10 @@
 package se.refur.javalin.methods
 
 import io.javalin.Javalin
-import io.javalin.core.security.RouteRole
 import io.javalin.http.Context
 import io.javalin.http.Handler
 import io.javalin.http.HandlerType
+import io.javalin.security.RouteRole
 import se.refur.javalin.JavalinAnnotation
 import se.refur.javalin.params.AnnotatedParameter
 import java.lang.reflect.Method

@@ -1,6 +1,7 @@
 package se.refur.javalin
 
-import io.javalin.core.security.RouteRole
+import io.javalin.security.RouteRole
+
 
 /**
  * The purpose of this object is holding settings needed to expose javalin endpoint routes

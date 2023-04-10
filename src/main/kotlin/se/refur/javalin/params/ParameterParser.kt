@@ -125,7 +125,7 @@ internal object FormParamAsBoolean : IParameterParser {
 internal object FileParamAsByteArray : IParameterParser {
     private val parser: (Context, String) -> Any = { ctx: Context, paramName: String ->
         ctx.uploadedFile(paramName)
-            ?.content
+            ?.content()
             ?.readAllBytes()
             ?: throw Exception("No file content for parameter $paramName")
     }
@@ -140,7 +140,7 @@ internal object FileParamAsByteArray : IParameterParser {
 internal object FileParamAsString : IParameterParser {
     private val parser: (Context, String) -> Any = { ctx: Context, paramName: String ->
         ctx.uploadedFile(paramName)
-            ?.filename
+            ?.filename()
             ?: throw Exception("No filename for parameter $paramName")
     }
 
