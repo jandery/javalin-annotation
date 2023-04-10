@@ -1,6 +1,6 @@
 package se.refur.javalin
 
-import io.javalin.core.security.RouteRole
+import io.javalin.security.RouteRole
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

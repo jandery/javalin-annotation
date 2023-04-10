@@ -4,12 +4,21 @@ import io.javalin.http.Context
 import io.javalin.http.UploadedFile
 import io.mockk.every
 import io.mockk.mockk
+import jakarta.servlet.http.Part
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 class ParamParserTest {
+    private val uploadedFile = "This is an uploaded file"
+
+    private fun generatePart(): Part = mockk<Part>().also {
+        every { it.inputStream } returns uploadedFile.toByteArray().inputStream()
+        every { it.contentType } returns "txt"
+        every { it.submittedFileName } returns "hovno.txt"
+        every { it.size } returns uploadedFile.toByteArray().size.toLong()
+    }
 
     @Test
     fun routeParamAsDate_validDateAsString_isLocalDate() {
@@ -76,15 +85,9 @@ class ParamParserTest {
 
     @Test
     fun fileParamAsByteArray_validAsByteArray_isByteArray() {
-        val fileContent = "This is an uploaded file".toByteArray()
         val ctx = mockk<Context>().also {
-            every { it.uploadedFile("theFile") } returns UploadedFile(
-                content = fileContent.inputStream(),
-                contentType = "txt",
-                filename = "tada",
-                extension = "txt",
-                size = fileContent.size.toLong()
-            )
+            every { it.uploadedFile("theFile") } returns
+                    UploadedFile(generatePart())
         }
         val uploadedFile = FileParamAsByteArray.getTypedValue(ctx, "theFile")
         assertThat(uploadedFile).isInstanceOf(ByteArray::class.java)
@@ -104,15 +107,9 @@ class ParamParserTest {
 
     @Test
     fun fileParamAsString_validAsString_isString() {
-        val fileContent = "This is an uploaded file".toByteArray()
         val ctx = mockk<Context>().also {
-            every { it.uploadedFile("theFile") } returns UploadedFile(
-                content = fileContent.inputStream(),
-                contentType = "txt",
-                filename = "tada",
-                extension = "txt",
-                size = fileContent.size.toLong()
-            )
+            every { it.uploadedFile("theFile") } returns
+                    UploadedFile(generatePart())
         }
         val uploadedFile = FileParamAsString.getTypedValue(ctx, "theFile")
         assertThat(uploadedFile).isInstanceOf(String::class.java)

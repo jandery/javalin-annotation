@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import io.javalin.Javalin
-import io.javalin.core.security.RouteRole
-import io.javalin.plugin.json.JavalinJackson
+import io.javalin.json.JavalinJackson
+import io.javalin.security.RouteRole
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.Connection
 import org.jsoup.Jsoup
@@ -32,7 +32,8 @@ class ExposeClassEndpointsTest {
                 JavalinJackson(
                     ObjectMapper()
                         .registerModule(JavaTimeModule())
-                        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)))
+                        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false))
+            )
         }
         .exposeClassEndpoints(SecondExposedClass::class)
 
