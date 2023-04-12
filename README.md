@@ -22,13 +22,13 @@ Include the following in your POM:
         <dependency>
             <groupId>io.javalin</groupId>
             <artifactId>javalin</artifactId>
-            <version>4.6.4</version>
+            <version>5.4.2</version>
         </dependency>
         <!-- Javalin extension for annotations from refur maven-repo -->
         <dependency>
             <groupId>se.refur</groupId>
             <artifactId>javalin</artifactId>
-            <version>1.3.0</version>
+            <version>2.0.0</version>
         </dependency>
     </dependencies>    
 </project>
@@ -162,7 +162,7 @@ class ParameterExample {
 ##### Endpoint access
 Role management needs to be setup before endpoints can be exposed
 ```kotlin
-import io.javalin.core.security.RouteRole
+import io.javalin.security.RouteRole
 
 // Available roles
 enum class MyAccessRoles : RouteRole {
