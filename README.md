@@ -18,12 +18,6 @@ Include the following in your POM:
     </repositories>
 
     <dependencies>
-        <!-- Javalin web server from maven-central -->
-        <dependency>
-            <groupId>io.javalin</groupId>
-            <artifactId>javalin</artifactId>
-            <version>5.4.2</version>
-        </dependency>
         <!-- Javalin extension for annotations from refur maven-repo -->
         <dependency>
             <groupId>se.refur</groupId>

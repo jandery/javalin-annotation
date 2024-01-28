@@ -4,7 +4,7 @@ import io.javalin.http.Context
 import java.time.LocalDate
 
 /**
- * The purpose of this interface is funtion for parsing a parameter to a specific type
+ * The purpose of this interface is function for parsing a parameter to a specific type
  */
 internal interface IParameterParser {
     fun getTypedValue(ctx: Context, paramName: String): Any
