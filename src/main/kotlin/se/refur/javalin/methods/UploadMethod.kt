@@ -6,7 +6,7 @@ import se.refur.javalin.Upload
 import java.lang.reflect.Method
 
 /**
- * The purpose of this class is generate web server handler for file upload
+ * The purpose of this class is to generate web server handler for file upload
  */
 internal class UploadMethod(method: Method) : AnnotatedMethod(method) {
     /**

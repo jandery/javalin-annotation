@@ -6,7 +6,7 @@ import se.refur.javalin.Download
 import java.lang.reflect.Method
 
 /**
- * The purpose of this class is generate web server handler for file download
+ * The purpose of this class is to generate web server handler for file download
  */
 internal class DownloadMethod(method: Method) : AnnotatedMethod(method) {
     /**

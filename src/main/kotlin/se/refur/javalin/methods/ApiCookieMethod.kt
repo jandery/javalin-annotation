@@ -6,7 +6,7 @@ import se.refur.javalin.ApiCookie
 import java.lang.reflect.Method
 
 /**
- * The purpose of this class is generate web server handler for an API route with purpose of
+ * The purpose of this class is to generate web server handler for an API route with purpose of
  * setting cookies
  */
 internal class ApiCookieMethod(method: Method) : AnnotatedMethod(method) {

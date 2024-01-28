@@ -6,7 +6,7 @@ import se.refur.javalin.Api
 import java.lang.reflect.Method
 
 /**
- * The purpose of this class is generate web server handler for an API route
+ * The purpose of this class is to generate web server handler for an API route
  */
 internal class ApiMethod(method: Method) : AnnotatedMethod(method) {
     /**

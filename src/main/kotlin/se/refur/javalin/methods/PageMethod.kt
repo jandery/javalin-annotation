@@ -6,7 +6,7 @@ import se.refur.javalin.Page
 import java.lang.reflect.Method
 
 /**
- * The purpose of this class is generate web server handler for an Web page route, request for HTML
+ * The purpose of this class is to generate web server handler for a Web page route, request for HTML
  */
 internal class PageMethod(method: Method) : AnnotatedMethod(method) {
     /**
