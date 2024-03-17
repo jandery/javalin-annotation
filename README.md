@@ -100,7 +100,7 @@ class UploadEndpointExample {
 class CssEndpointExample {
     @Css(path = "/resources/styles.css")
     fun cssFile(): String {
-        return ".body { bgColor: Red }"
+        return Companion::class.java.getResourceAsStream("/css.css")?.readAllBytes()?.let { String(it) } ?: ""
     }
 }
 
