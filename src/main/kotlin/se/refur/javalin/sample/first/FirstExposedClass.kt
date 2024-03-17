@@ -7,7 +7,7 @@ import se.refur.javalin.Page
 @Suppress("unused")
 class FirstExposedClass {
 
-    @Page(type = HandlerType.GET, path = "/first", templatePath = "", accessRole = "PUBLIC")
+    @Page(type = HandlerType.GET, path = "/first", templatePath = "/freemarker-pages/first.ftl", accessRole = "PUBLIC")
     fun pageHandler(): Map<String, Any> = emptyMap()
 
     @Api(type = HandlerType.GET, path = "/api/first", accessRole = "PUBLIC")

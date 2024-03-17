@@ -35,6 +35,14 @@ fun Javalin.exposePackageEndpoints(packageName: String): Javalin {
         .map { UploadMethod(it) }
         .forEach { it.addHandler(this) }
 
+    getAnnotatedMethods(packageName, Css::class)
+        .map { CssMethod(it) }
+        .forEach { it.addHandler(this) }
+
+    getAnnotatedMethods(packageName, Js::class)
+        .map { JsMethod(it) }
+        .forEach { it.addHandler(this) }
+
     // Return this for chaining
     return this
 }

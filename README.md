@@ -22,7 +22,7 @@ Include the following in your POM:
         <dependency>
             <groupId>se.refur</groupId>
             <artifactId>javalin</artifactId>
-            <version>2.0.0</version>
+            <version>2.0.1</version>
         </dependency>
     </dependencies>    
 </project>
@@ -61,14 +61,6 @@ class ApiEndpointExample {
     @Api(type = HandlerType.GET, path = "/api/second/string", accessRole = "PUBLIC")
     fun apiStringHandler(): String = "API response for SecondExposedClass"
 
-    // Return parameter : Int
-    @Api(type = HandlerType.GET, path = "/api/second/int", accessRole = "PUBLIC")
-    fun apiIntHandler(): Int = 42
-
-    // Return parameter : Boolean
-    @Api(type = HandlerType.GET, path = "/api/second/bool", accessRole = "PUBLIC")
-    fun apiBoolHandler(): Boolean = false
-
     // Return parameter : Data class
     @Api(type = HandlerType.GET, path = "/api/second/obj", accessRole = "PUBLIC")
     fun apiObjectHandler(): MyDataClass = MyDataClass(
@@ -102,6 +94,20 @@ class UploadEndpointExample {
         @Param(paramName = "fileContent", parameterType = ParameterType.FILE) originalFileName: String
     ): String {
         return "file size is ${fileContent.size} for uploaded file $originalFileName"
+    }
+}
+
+class CssEndpointExample {
+    @Css(path = "/resources/styles.css")
+    fun cssFile(): String {
+        return ".body { bgColor: Red }"
+    }
+}
+
+class JsEndpointExample {
+    @Js(path = "/resources/main.js")
+    fun jsFile(): String {
+        return "setTimeout({ window.console.log('Delayed logging'); }, 200);"
     }
 }
 ```

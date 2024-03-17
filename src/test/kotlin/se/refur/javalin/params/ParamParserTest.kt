@@ -16,7 +16,7 @@ class ParamParserTest {
     private fun generatePart(): Part = mockk<Part>().also {
         every { it.inputStream } returns uploadedFile.toByteArray().inputStream()
         every { it.contentType } returns "txt"
-        every { it.submittedFileName } returns "hovno.txt"
+        every { it.submittedFileName } returns "sample.txt"
         every { it.size } returns uploadedFile.toByteArray().size.toLong()
     }
 

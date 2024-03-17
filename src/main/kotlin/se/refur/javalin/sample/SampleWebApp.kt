@@ -1,6 +1,7 @@
 package se.refur.javalin.sample
 
 import io.javalin.Javalin
+import io.javalin.http.Context
 import io.javalin.security.RouteRole
 import se.refur.javalin.JavalinAnnotation
 import se.refur.javalin.exposeClassEndpoints
@@ -25,6 +26,15 @@ class SampleWebApp {
     private val javalin: Javalin = Javalin
         // accept all
         .create { config -> config.accessManager { handler, ctx, _ -> handler.handle(ctx) } }
+
+        // This is according to Javalin documentation
+        .get("/api/sample-path") { ctx: Context ->
+            ctx.json(SampleDto())
+        }
+        .post("/api/sample-path") { ctx: Context ->
+            ctx.json(SampleDto())
+        }
+
         // expose by package name
         .exposePackageEndpoints("se.refur.javalin.sample.first")
         // expose by Kotlin class, alternative by Java class (SecondExposedClass::class.java)
@@ -38,3 +48,5 @@ class SampleWebApp {
         javalin.stop()
     }
 }
+
+data class SampleDto(val name: String = "Magic number", val value: Int = 3)

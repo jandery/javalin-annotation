@@ -91,3 +91,16 @@ annotation class Upload(
     val description: String = ""
 )
 
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Css(
+    val path: String,
+    val description: String = ""
+)
+
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Js(
+    val path: String,
+    val description: String = ""
+)

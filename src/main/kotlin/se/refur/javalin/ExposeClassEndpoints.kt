@@ -44,6 +44,14 @@ fun <T : Any> Javalin.exposeClassEndpoints(clazz: Class<T>): Javalin {
         .map { UploadMethod(it) }
         .forEach { it.addHandler(this) }
 
+    allClassMethods.filter { it.isAnnotationPresent(Css::class.java) }
+        .map { CssMethod(it) }
+        .forEach { it.addHandler(this) }
+
+    allClassMethods.filter { it.isAnnotationPresent(Js::class.java) }
+        .map { JsMethod(it) }
+        .forEach { it.addHandler(this) }
+
     // Return this for chaining
     return this
 }
