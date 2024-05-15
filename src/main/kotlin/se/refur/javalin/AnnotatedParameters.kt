@@ -21,9 +21,10 @@ annotation class Param(
  * @property ROUTE route parameter, f.x. /api/{PARAM}
  * @property QUERY query parameter, f.x. /api?{PARAM}=value
  * @property FORM form parameter, f.x. jquery.ajax({data:{PARAM:"value"}})
+ * @property BODY body parameter, f.x. fetch("URL", {method: "POST", body: {PARAM: "value"}})
  * @property COOKIE stored cookie
  * @property FILE uploaded file
  */
 enum class ParameterType {
-    ROUTE, QUERY, FORM, COOKIE, FILE
+    ROUTE, QUERY, FORM, BODY, COOKIE, FILE
 }

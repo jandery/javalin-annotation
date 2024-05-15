@@ -49,6 +49,7 @@ private val parameterParsers: Map<Pair<ParameterType, String>, IParameterParser>
     Pair(ParameterType.QUERY, String::class.java.simpleName) to QueryParamAsString,
     Pair(ParameterType.QUERY, Int::class.java.simpleName) to QueryParamAsInt,
     Pair(ParameterType.QUERY, LocalDate::class.java.simpleName) to QueryParamAsLocalDate,
+    Pair(ParameterType.BODY, String::class.java.simpleName) to BodyParamAsString,
     Pair(ParameterType.FORM, String::class.java.simpleName) to FormParamAsString,
     Pair(ParameterType.FORM, Int::class.java.simpleName) to FormParamAsInt,
     Pair(ParameterType.FORM, LocalDate::class.java.simpleName) to FormParamAsLocalDate,

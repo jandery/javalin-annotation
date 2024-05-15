@@ -78,6 +78,11 @@ internal object QueryParamAsLocalDate : IParameterParser {
         parseWithException(parser, ctx, paramName, LocalDate::class.simpleName)
 }
 
+internal object BodyParamAsString : IParameterParser {
+    override fun getTypedValue(ctx: Context, paramName: String): Any =
+        ctx.body()
+}
+
 /**
  * Parse a form parameter as String
  * f.x. jQuery.ajax({data:{strValue:"aValue",intValue:42,dateValue:"2022-10-20",boolValue:true}})
