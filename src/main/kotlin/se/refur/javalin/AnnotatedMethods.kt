@@ -91,6 +91,11 @@ annotation class Upload(
     val description: String = ""
 )
 
+/**
+ * The purpose of annotation is to register a CSS file endpoint
+ * @property path Route path for endpoint
+ * @property description optional, description of method
+ */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Css(
@@ -98,6 +103,11 @@ annotation class Css(
     val description: String = ""
 )
 
+/**
+ * The purpose of annotation is to register a JS file endpoint
+ * @property path Route path for endpoint
+ * @property description optional, description of method
+ */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Js(

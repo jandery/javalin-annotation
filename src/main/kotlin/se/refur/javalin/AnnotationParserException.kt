@@ -1,4 +1,6 @@
 package se.refur.javalin
 
-class AnnotationParserException(message: String) : Exception(message) {
-}
+/**
+ * The purpose of this exception is to handle errors in parsing annotated parameters
+ */
+class AnnotationParserException(message: String) : Exception(message)

@@ -36,5 +36,5 @@ object JavalinAnnotation {
      */
     internal fun getRole(roleName: String): RouteRole =
         availableRoles[roleName]
-            ?: throw Exception("No role matching '$roleName'")
+            ?: throw AnnotationParserException("No role matching '$roleName'")
 }
