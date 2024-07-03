@@ -2,7 +2,7 @@
 
 The purpose is to allow Javalin routes to be added by annotations.
 
-##### Getting started
+## Getting started
 Include the following in your POM:
 ```xml
 <project xmlns="...">
@@ -28,7 +28,7 @@ Include the following in your POM:
 </project>
 ```
 
-##### Annotations for endpoints
+### Annotations for endpoints
 Endpoints to be exposed by Javalin should be annotated with
 
 @Page, for web pages rendering using rendering engine. These methods must return a rendering map (Map<String, Any>).
@@ -112,18 +112,25 @@ class JsEndpointExample {
 }
 ```
 
-##### Parameters for endpoints
-Endpoint parameters should be annotated with @Param
+### Parameters for endpoints
+Endpoint parameters should be annotated with @Param.
+When unable to parse param to requested type, an AnnotationException will be thrown.
 
-The following types of parameters are supported (see ParameterType enum):
+```javascript
+// Using jQuery
+$.get('/api/date', (data) => { /**/ });
+$.get('/api/route/ROUTE-PARAM', (data) => { /**/ });
+$.post('/api/form', { data: { FORM-PARAM: "param-value" }}).then(response => { /**/ });
+$.post('/api/body', { data: 'BODY-PARAM' }).then(response => { /**/ });
 
-ROUTE, example /api/{PARAM}
-
-QUERY, example /api?{PARAM}=value
-
-FORM, example jQuery.ajax({data:{strValue:"aValue",intValue:42,dateValue:"2022-10-20",boolValue:true}})
-
-COOKIE, stored with @ApiCookie annotated method
+// Using fetch
+fetch('/api/date').then(response => response.json())then(data => { /**/ });
+fetch('/api/route/ROUTE-PARAM').then(response => response.json()).then(data => { /**/ });
+let form = new FormData();
+form.append('FORM-PARAM', 'param-value');
+fetch('/api/form', { method: 'POST', body: form }).then(response => response.json()).then(data => { /**/ });
+fetch('/api/body', { method: 'POST', body: 'BODY-PARAM' }).then(response => response.json()).then(data => { /**/ });
+```
 
 ```kotlin
 package se.refur.examples
@@ -159,7 +166,7 @@ class ParameterExample {
 }
 ```
 
-##### Endpoint access
+### Endpoint access
 Role management needs to be setup before endpoints can be exposed
 ```kotlin
 import io.javalin.security.RouteRole
@@ -184,36 +191,44 @@ JavalinAnnotation.setRoles(mapOf("adminRole" to MyAccessRoles.ADMIN, "publicRole
 fun apiPath(): String = ""
 ```
 
-##### Setup of Javalin endpoints using annotations
+### Setup of Javalin endpoints using annotations
 Setup endpoints
 
 ```kotlin
 
 import io.javalin.Javalin
+import io.javalin.http.Handler
 
 // Without Endpoint access
 Javalin.create()
-// expose endpoints via package
+    // expose endpoints via package
     .exposePackageEndpoints("se.refur.examples")
     // expose endpoints via class
     .exposeClassEndpoints(SecondExample::class)
+    // expose endpoints via Java class
+    .exposeClassEndpoints(SecondExample::class.java)
 
 // With Endpoint access, and data classes (with local-date) as return objects
 Javalin
     // web server configuration
     .create { config: JavalinConfig ->
         // Access handler
-        config.accessManager { handler, ctx, _ -> /* Restrict access here */ handler.handle(ctx) }
+        config.accessManager { handler: Handler, ctx: Context, _ -> /* Restrict access here */ handler.handle(ctx) }
         // Jackson/Json parser setup
         config.jsonMapper(
             JavalinJackson(
                 ObjectMapper()
                     .registerModule(JavaTimeModule())
-                    .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)))
+                    .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+            )
+        )
     }
     // expose endpoints via package
     .exposePackageEndpoints("se.refur.examples")
-    // expose endpoints via class
+    // expose endpoints via Kotlin class
     .exposeClassEndpoints(ParameterExample::class)
+    // expose endpoints via Java class
+    .exposeClassEndpoints(SecondExample::class.java)
+
 
 ```
