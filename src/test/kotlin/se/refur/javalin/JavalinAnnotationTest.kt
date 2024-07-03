@@ -17,7 +17,7 @@ class JavalinAnnotationTest {
         Assertions.assertThatThrownBy {
             JavalinAnnotation.getRole("NON_EXISTING")
         }
-            .isExactlyInstanceOf(Exception::class.java)
+            .isExactlyInstanceOf(AnnotationParserException::class.java)
             .hasMessage("No role matching 'NON_EXISTING'")
     }
     @Test
@@ -26,7 +26,7 @@ class JavalinAnnotationTest {
         Assertions.assertThatThrownBy {
             JavalinAnnotation.getRole("NON_EXISTING")
         }
-            .isExactlyInstanceOf(Exception::class.java)
+            .isExactlyInstanceOf(AnnotationParserException::class.java)
             .hasMessage("No role matching 'NON_EXISTING'")
     }
 
@@ -36,7 +36,7 @@ class JavalinAnnotationTest {
         Assertions.assertThatThrownBy {
             JavalinAnnotation.getRole("NON_EXISTING")
         }
-            .isExactlyInstanceOf(Exception::class.java)
+            .isExactlyInstanceOf(AnnotationParserException::class.java)
             .hasMessage("No role matching 'NON_EXISTING'")
     }
 

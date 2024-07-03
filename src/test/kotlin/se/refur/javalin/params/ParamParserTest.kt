@@ -8,6 +8,7 @@ import jakarta.servlet.http.Part
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
+import se.refur.javalin.AnnotationParserException
 import java.time.LocalDate
 
 class ParamParserTest {
@@ -37,7 +38,7 @@ class ParamParserTest {
         assertThatThrownBy {
             RouteParamAsLocalDate.getTypedValue(ctx, "date")
         }
-            .isExactlyInstanceOf(Exception::class.java)
+            .isExactlyInstanceOf(AnnotationParserException::class.java)
             .hasMessage("Could not parse 'date' to 'LocalDate'")
     }
 
@@ -58,7 +59,7 @@ class ParamParserTest {
         assertThatThrownBy {
             QueryParamAsLocalDate.getTypedValue(ctx, "date")
         }
-            .isExactlyInstanceOf(Exception::class.java)
+            .isExactlyInstanceOf(AnnotationParserException::class.java)
             .hasMessage("Could not parse 'date' to 'LocalDate'")
     }
 
@@ -79,7 +80,7 @@ class ParamParserTest {
         assertThatThrownBy {
             FormParamAsLocalDate.getTypedValue(ctx, "date")
         }
-            .isExactlyInstanceOf(Exception::class.java)
+            .isExactlyInstanceOf(AnnotationParserException::class.java)
             .hasMessage("Could not parse 'date' to 'LocalDate'")
     }
 
@@ -101,7 +102,7 @@ class ParamParserTest {
         assertThatThrownBy {
             FileParamAsByteArray.getTypedValue(ctx, "theFile")
         }
-            .isExactlyInstanceOf(Exception::class.java)
+            .isExactlyInstanceOf(AnnotationParserException::class.java)
             .hasMessage("Could not parse 'theFile' to 'byte[]'")
     }
 
@@ -123,7 +124,7 @@ class ParamParserTest {
         assertThatThrownBy {
             FileParamAsString.getTypedValue(ctx, "theFile")
         }
-            .isExactlyInstanceOf(Exception::class.java)
+            .isExactlyInstanceOf(AnnotationParserException::class.java)
             .hasMessage("Could not parse 'theFile' to 'String'")
     }
 }
