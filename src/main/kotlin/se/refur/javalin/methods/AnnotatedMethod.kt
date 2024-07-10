@@ -57,7 +57,7 @@ internal open class AnnotatedMethod(val annotationMethod: Method) {
      * Add route handler to web server
      */
     fun addHandler(javalin: Javalin) {
-        javalin.addHandler(
+        javalin.addHttpHandler(
             getWebServerHandlerType(),
             getWebServerRoute(),
             generateWebServerHandler(),

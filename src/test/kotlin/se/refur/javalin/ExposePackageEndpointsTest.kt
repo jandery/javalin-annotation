@@ -21,9 +21,7 @@ class ExposePackageEndpointsTest {
     }
 
     private val javalin: Javalin = Javalin
-        .create { config ->
-            config.accessManager { handler, ctx, _ -> handler.handle(ctx) }
-        }
+        .create()
         .exposePackageEndpoints("se.refur.javalin.sample.first")
 
     @BeforeAll

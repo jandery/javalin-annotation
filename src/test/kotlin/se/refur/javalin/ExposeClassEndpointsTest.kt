@@ -27,7 +27,6 @@ class ExposeClassEndpointsTest {
 
     private val javalin: Javalin = Javalin
         .create { config ->
-            config.accessManager { handler, ctx, _ -> handler.handle(ctx) }
             config.jsonMapper(
                 JavalinJackson(
                     ObjectMapper()

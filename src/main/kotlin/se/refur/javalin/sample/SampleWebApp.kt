@@ -24,9 +24,12 @@ class SampleWebApp {
     }
 
     private val javalin: Javalin = Javalin
-        // accept all
-        .create { config -> config.accessManager { handler, ctx, _ -> handler.handle(ctx) } }
-
+        .create()
+        .beforeMatched {
+            it.header("Access-Control-Allow-Origin", "*")
+            it.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+            it.header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        }
         // This is according to Javalin documentation
         .get("/api/sample-path") { ctx: Context ->
             ctx.json(SampleDto())
